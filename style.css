@@ -582,4 +582,109 @@ body.light-mode #search-input::placeholder {
     padding: 60px 20px;
     opacity: 0.7;
     font-size: 1.1rem;
+}/* ===== صفحه درباره ما ===== */
+.about-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.about-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    line-height: 1.9;
+}
+
+body.light-mode .about-section {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.about-section h2 {
+    color: #f0b90b;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(240, 185, 11, 0.3);
+}
+
+body.light-mode .about-section h2 {
+    color: #d99a00;
+}
+
+.about-section p {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.about-section ul {
+    margin: 15px 0;
+    padding-right: 20px;
+}
+
+.about-section ul li {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    list-style: none;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.light-mode .faq-item {
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-item h3 {
+    color: #f0b90b;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+body.light-mode .faq-item h3 {
+    color: #d99a00;
+}
+
+.faq-item p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.back-button {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.back-button a {
+    display: inline-block;
+    padding: 12px 30px;
+    background: rgba(240, 185, 11, 0.2);
+    border: 1px solid #f0b90b;
+    color: #f0b90b;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.back-button a:hover {
+    background: rgba(240, 185, 11, 0.35);
+    transform: translateY(-2px);
+}
+
+body.light-mode .back-button a {
+    background: rgba(217, 154, 0, 0.15);
+    color: #d99a00;
+    border-color: #d99a00;
 }
