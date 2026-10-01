@@ -1,12 +1,8 @@
 // ===== متغیرهای سراسری =====
 let allCoins = [];
-let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-let currentView = 'all';
 let usdToTomanRate = 0;
-let currentPage = 1;
-const ITEMS_PER_PAGE = 20;
 
-// ===== دریافت نرخ تومان =====
+// ===== دریافت نرخ دلار به تومان =====
 async function fetchTomanRate() {
     try {
         const res = await fetch(
@@ -62,7 +58,6 @@ async function fetchPrices() {
 
         const data = await response.json();
         allCoins = data;
-        currentPage = 1;
         applyFilters();
 
         const now = new Date();
@@ -73,57 +68,35 @@ async function fetchPrices() {
     }
 }
 
-// ===== اعمال فیلترها =====
+// ===== اعمال فیلتر جستجو =====
 function applyFilters() {
     const searchInput = document.getElementById('search-input');
     const term = (searchInput ? searchInput.value : '').toLowerCase().trim();
 
     let result = allCoins;
 
-    if (currentView === 'favorites') {
-        result = result.filter(coin => favorites.includes(coin.id));
-    }
-
     if (term !== '') {
-        result = result.filter(coin => {
+        result = allCoins.filter(coin => {
             const nameMatch = coin.name.toLowerCase().includes(term);
             const symbolMatch = coin.symbol.toLowerCase().includes(term);
             return nameMatch || symbolMatch;
         });
     }
 
-    // رندر با صفحه‌بندی
-    renderCoinsWithPagination(result);
-    updatePaginationButtons(result.length);
+    renderCoins(result);
 }
 
-// ===== رندر با صفحه‌بندی =====
-function renderCoinsWithPagination(coinsList) {
+// ===== رندر کارت‌ها =====
+function renderCoins(coinsList) {
     const grid = document.getElementById('crypto-grid');
     grid.innerHTML = '';
 
-    if (currentView === 'favorites' && coinsList.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-favorites">
-                <span class="big-star">⭐</span>
-                هنوز هیچ ارزی رو به علاقه‌مندی‌ها اضافه نکردی.<br>
-                روی ستاره هر کارت بزن تا اینجا ذخیره بشه.
-            </div>
-        `;
-        return;
-    }
-
     if (coinsList.length === 0) {
-        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding:40px;">🔍 هیچ ارزی با این اسم پیدا نشد</p>';
+        grid.innerHTML = '<p class="no-results">🔍 هیچ ارزی با این اسم پیدا نشد</p>';
         return;
     }
 
-    // محاسبه بازه صفحه فعلی
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    const pageCoins = coinsList.slice(startIndex, endIndex);
-
-    pageCoins.forEach(coin => {
+    coinsList.forEach(coin => {
         const realRank = allCoins.indexOf(coin) + 1;
         const name = coin.name;
         const symbol = coin.symbol.toUpperCase();
@@ -133,21 +106,16 @@ function renderCoinsWithPagination(coinsList) {
         const cls = change >= 0 ? 'positive' : 'negative';
         const sign = change >= 0 ? '▲ +' : '▼ ';
 
+        // قیمت تومان
         let priceToman = '';
         if (usdToTomanRate > 0) {
             const toman = coin.current_price * usdToTomanRate;
             priceToman = toman.toLocaleString('fa-IR', { maximumFractionDigits: 0 }) + ' تومان';
         }
 
-        const isFav = favorites.includes(coin.id);
-        const starIcon = isFav ? '⭐' : '☆';
-
         const card = document.createElement('div');
         card.className = 'crypto-card';
         card.innerHTML = `
-            <button class="favorite-btn ${isFav ? 'active' : ''}" data-id="${coin.id}">
-                ${starIcon}
-            </button>
             <span class="rank">#${realRank}</span>
             <img src="${imageUrl}" alt="${name}" class="coin-logo">
             <h3>${name}</h3>
@@ -157,106 +125,9 @@ function renderCoinsWithPagination(coinsList) {
             <p class="change ${cls}">${sign}${change.toFixed(2)}%</p>
         `;
 
-        const favBtn = card.querySelector('.favorite-btn');
-        favBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleFavorite(coin.id);
-        });
-
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('.favorite-btn')) return;
-            openChart(coin);
-        });
-
+        card.addEventListener('click', () => openChart(coin));
         grid.appendChild(card);
     });
-}
-
-// ===== به‌روزرسانی دکمه‌های صفحه‌بندی =====
-function updatePaginationButtons(totalItems) {
-    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-    const prevBtn = document.getElementById('prev-page');
-    const nextBtn = document.getElementById('next-page');
-    const pageInfo = document.getElementById('page-info');
-
-    if (totalPages <= 1) {
-        document.getElementById('pagination').style.display = 'none';
-        return;
-    }
-
-    document.getElementById('pagination').style.display = 'flex';
-
-    pageInfo.textContent = `صفحه ${currentPage} از ${totalPages}`;
-    prevBtn.disabled = currentPage === 1;
-    nextBtn.disabled = currentPage === totalPages;
-}
-
-// ===== دکمه‌های صفحه‌بندی =====
-function setupPagination() {
-    document.getElementById('prev-page').addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            applyFilters();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
-
-    document.getElementById('next-page').addEventListener('click', () => {
-        currentPage++;
-        applyFilters();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-}
-
-// ===== علاقه‌مندی =====
-function toggleFavorite(coinId) {
-    const index = favorites.indexOf(coinId);
-    if (index === -1) {
-        favorites.push(coinId);
-    } else {
-        favorites.splice(index, 1);
-    }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    updateFavCount();
-    applyFilters();
-}
-
-function updateFavCount() {
-    const favCount = document.getElementById('fav-count');
-    if (favCount) favCount.textContent = favorites.length;
-}
-
-// ===== دکمه‌های فیلتر =====
-function setupFilterButtons() {
-    const showAll = document.getElementById('show-all');
-    const showFav = document.getElementById('show-favorites');
-
-    showAll.addEventListener('click', () => {
-        currentView = 'all';
-        currentPage = 1;
-        showAll.classList.add('active');
-        showFav.classList.remove('active');
-        applyFilters();
-    });
-
-    showFav.addEventListener('click', () => {
-        currentView = 'favorites';
-        currentPage = 1;
-        showFav.classList.add('active');
-        showAll.classList.remove('active');
-        applyFilters();
-    });
-}
-
-// ===== جستجو =====
-function setupSearch() {
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', () => {
-            currentPage = 1;
-            applyFilters();
-        });
-    }
 }
 
 // ===== نمودار =====
@@ -272,6 +143,7 @@ async function openChart(coin) {
     modalName.textContent = coin.name;
     modalPrice.textContent = '$' + coin.current_price.toLocaleString('en-US');
     modalLogo.src = coin.image;
+    modalLogo.alt = coin.name;
 
     const change = coin.price_change_percentage_24h || 0;
     modalChange.textContent = 
@@ -287,6 +159,7 @@ async function openChart(coin) {
         const response = await fetch(
             `https://api.coingecko.com/api/v3/coins/${coin.id}/market_chart?vs_currency=usd&days=7`
         );
+
         const data = await response.json();
         const prices = data.prices;
 
@@ -299,7 +172,9 @@ async function openChart(coin) {
         });
         const values = prices.map(p => p[1]);
 
-        const isUp = values[values.length - 1] >= values[0];
+        const firstPrice = values[0];
+        const lastPrice = values[values.length - 1];
+        const isUp = lastPrice >= firstPrice;
         const lineColor = isUp ? '#0ecb81' : '#f6465d';
         const fillColor = isUp ? 'rgba(14, 203, 129, 0.15)' : 'rgba(246, 70, 93, 0.15)';
 
@@ -354,7 +229,7 @@ async function openChart(coin) {
         });
 
     } catch (error) {
-        chartContainer.innerHTML = '<p style="text-align:center;padding:50px;opacity:0.6;">❌ خطا</p>';
+        chartContainer.innerHTML = '<p style="text-align:center;padding:50px;opacity:0.6;">❌ خطا در دریافت نمودار</p>';
     }
 }
 
@@ -382,14 +257,21 @@ function setupChartModal() {
     });
 }
 
+// ===== گوش دادن به تایپ کاربر =====
+function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            applyFilters();
+        });
+    }
+}
+
 // ===== شروع =====
 window.addEventListener('DOMContentLoaded', () => {
     setupTheme();
     setupSearch();
-    setupFilterButtons();
-    setupPagination();
     setupChartModal();
-    updateFavCount();
     fetchPrices();
     setInterval(fetchPrices, 60000);
 });
