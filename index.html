@@ -3,28 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- ===== سئو ===== -->
     <title>قیمت لحظه‌ای ارز دیجیتال به تومان | ۲۰۰ ارز برتر</title>
-    <meta name="description" content="مشاهده قیمت لحظه‌ای، نمودار ۷ روزه و درصد تغییرات ۲۰۰ ارز دیجیتال برتر به دلار و تومان. با جستجوی سریع و علاقه‌مندی‌ها.">
-    <meta name="keywords" content="قیمت ارز دیجیتال، قیمت بیت کوین، قیمت اتریوم، ارز دیجیتال به تومان، قیمت لحظه‌ای">
-    <meta name="author" content="سایت قیمت ارز دیجیتال">
-    
-    <!-- اوپن‌گراف (برای اشتراک‌گذاری در شبکه‌های اجتماعی) -->
-    <meta property="og:title" content="قیمت لحظه‌ای ارز دیجیتال به تومان">
-    <meta property="og:description" content="مشاهده قیمت لحظه‌ای ۲۰۰ ارز دیجیتال برتر به دلار و تومان با نمودار ۷ روزه.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://javadgafari504-cmyk.github.io/crypto-site/">
-    
-    <!-- ===== استایل‌ها ===== -->
+    <meta name="description" content="مشاهده قیمت لحظه‌ای، نمودار ۷ روزه و درصد تغییرات ۲۰۰ ارز دیجیتال برتر به دلار و تومان.">
     <link rel="stylesheet" href="style.css">
-</head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قیمت ارز دیجیتال</title>
-    <link rel="stylesheet" href="style.css"><!-- Statsfa Website Analytics Start -->
-<script data-host="https://statsfa.com" data-dnt="false" src="https://statsfa.com/js/script.js" id="ZwSg9rf6GA" async defer></script>
-<!-- Statsfa Website Analytics End -->
 </head>
 <body>
 
@@ -44,9 +25,24 @@
             >
         </div>
 
+        <div class="filter-buttons">
+            <button id="show-all" class="filter-btn active">🌐 همه ارزها</button>
+            <button id="show-favorites" class="filter-btn">
+                ⭐ علاقه‌مندی‌ها (<span id="fav-count">0</span>)
+            </button>
+        </div>
+
         <div id="crypto-grid">
             <p style="text-align:center; padding:40px;">⏳ در حال دریافت...</p>
         </div>
+
+        <!-- دکمه‌های صفحه‌بندی -->
+        <div class="pagination" id="pagination">
+            <button id="prev-page" class="page-btn">◀ قبلی</button>
+            <span id="page-info">صفحه ۱</span>
+            <button id="next-page" class="page-btn">بعدی ▶</button>
+        </div>
+
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
