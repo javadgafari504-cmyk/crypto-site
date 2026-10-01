@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- ===== SEO اصلی ===== -->
+    <title>قیمت لحظه‌ای ارز دیجیتال به تومان | ۲۰۰ ارز برتر با نمودار</title>
+    <meta name="description" content="مشاهده قیمت لحظه‌ای، نمودار ۷ روزه و درصد تغییرات ۲۰۰ ارز دیجیتال برتر به دلار و تومان. به‌روزرسانی خودکار هر ۶۰ ثانیه، جستجوی سریع، ذخیره علاقه‌مندی‌ها و حالت شب/روز.">
+    <meta name="keywords" content="قیمت ارز دیجیتال، قیمت بیت کوین، قیمت اتریوم، قیمت لحظه‌ای، ارز دیجیتال به تومان، قیمت رمزارز، بازار کریپتو، قیمت سولانا، قیمت ریپل، قیمت دوج کوین">
+    <meta name="author" content="سایت قیمت ارز دیجیتال">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Persian">
+    <meta name="revisit-after" content="1 days">
+    <meta name="rating" content="general">
+    
+    <!-- ===== Open Graph (فیسبوک، لینکدین) ===== -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="قیمت لحظه‌ای ارز دیجیتال به تومان | ۲۰۰ ارز برتر">
+    <meta property="og:description" content="مشاهده قیمت لحظه‌ای ۲۰۰ ارز دیجیتال برتر به دلار و تومان با نمودار ۷ روزه و به‌روزرسانی خودکار.">
+    <meta property="og:url" content="https://javadgafari504-cmyk.github.io/crypto-site/">
+    <meta property="og:site_name" content="قیمت ارز دیجیتال">
+    <meta property="og:locale" content="fa_IR">
+    
+    <!-- ===== Twitter Card ===== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="قیمت لحظه‌ای ارز دیجیتال به تومان">
+    <meta name="twitter:description" content="۲۰۰ ارز دیجیتال برتر با قیمت لحظه‌ای، نمودار و قیمت تومانی.">
+    
+    <!-- ===== فاویکون (ایموجی به عنوان آیکون) ===== -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+    
+    <!-- ===== امنیت ===== -->
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <!-- ===== استایل‌ها ===== -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- ===== Schema.org برای گوگل ===== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "قیمت ارز دیجیتال",
+        "url": "https://javadgafari504-cmyk.github.io/crypto-site/",
+        "description": "مشاهده قیمت لحظه‌ای ۲۰۰ ارز دیجیتال برتر به دلار و تومان",
+        "inLanguage": "fa-IR",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://javadgafari504-cmyk.github.io/crypto-site/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- ===== هدر ===== -->
+    <header role="banner">
+        <button id="theme-toggle" title="تغییر تم" aria-label="تغییر حالت شب و روز">🌙</button>
+        <h1>💰 قیمت لحظه‌ای ارز دیجیتال</h1>
+        <p id="last-update" aria-live="polite">در حال دریافت...</p>
+    </header>
+
+    <!-- ===== محتوای اصلی ===== -->
+    <main role="main">
+
+        <!-- کادر جستجو -->
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="search-input" 
+                placeholder="🔍 جستجو (مثلاً Bitcoin یا BTC)..."
+                autocomplete="off"
+                aria-label="جستجوی ارز دیجیتال"
+            >
+        </div>
+
+        <!-- دکمه‌های فیلتر -->
+        <div class="filter-buttons" role="tablist">
+            <button 
+                id="show-all" 
+                class="filter-btn active" 
+                role="tab"
+                aria-selected="true"
+            >
+                🌐 همه ارزها
+            </button>
+            <button 
+                id="show-favorites" 
+                class="filter-btn" 
+                role="tab"
+                aria-selected="false"
+            >
+                ⭐ علاقه‌مندی‌ها (<span id="fav-count">0</span>)
+            </button>
+        </div>
+
+        <!-- شبکه کارت‌ها -->
+        <section 
+            id="crypto-grid" 
+            aria-label="لیست ارزهای دیجیتال"
+            aria-live="polite"
+        >
+            <p style="text-align:center; padding:40px;">⏳ در حال دریافت قیمت‌ها...</p>
+        </section>
+
+        <!-- صفحه‌بندی -->
+        <nav class="pagination" id="pagination" aria-label="صفحه‌بندی">
+            <button id="prev-page" class="page-btn" aria-label="صفحه قبلی">◀ قبلی</button>
+            <span id="page-info" aria-live="polite">صفحه ۱</span>
+            <button id="next-page" class="page-btn" aria-label="صفحه بعدی">بعدی ▶</button>
+        </nav>
+
+        <!-- لینک به صفحه درباره ما -->
+        <nav style="text-align: center; padding: 10px 0 30px;" aria-label="لینک‌های مفید">
+            <a href="about.html" style="color: #f0b90b; text-decoration: none; font-weight: bold; font-size: 0.95rem;">
+                📄 درباره ما
+            </a>
+        </nav>
+
+    </main>
+
+    <!-- ===== فوتر ===== -->
+    <footer role="contentinfo">
+        <p>داده‌ها از CoinGecko | به‌روزرسانی خودکار هر ۶۰ ثانیه</p>
+        <p style="margin-top: 8px; font-size: 0.75rem;">
+            © ۲۰۲۶ سایت قیمت ارز دیجیتال | تمامی حقوق محفوظ است
+        </p>
+    </footer>
+
+    <!-- ===== کتابخانه Chart.js ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- ===== پنجره Modal نمودار ===== -->
+    <div 
+        id="chart-modal" 
+        class="modal" 
+        role="dialog" 
+        aria-modal="true"
+        aria-labelledby="modal-name"
+    >
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="بستن">✖</button>
+            <div class="modal-header">
+                <img id="modal-logo" src="" alt="" class="modal-logo">
+                <div>
+                    <h2 id="modal-name">-</h2>
+                    <p id="modal-price">-</p>
+                </div>
+            </div>
+            <p id="modal-change">-</p>
+            <div class="chart-container">
+                <canvas id="price-chart"></canvas>
+            </div>
+            <p class="chart-label">نمودار قیمت ۷ روز اخیر (دلار)</p>
+        </div>
+    </div>
+
+    <!-- ===== اسکریپت اصلی ===== -->
+    <script src="script.js"></script>
+</body>
+</html>
