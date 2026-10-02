@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزئیات ارز | قیمت ارز دیجیتال</title>
+    <meta name="description" content="جزئیات کامل ارز دیجیتال شامل قیمت، مارکت‌کپ، حجم معاملات و نمودار تاریخی.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <button id="theme-toggle">🌙</button>
+        <h1 id="coin-title">جزئیات ارز</h1>
+        <p><a href="index.html" style="color:#f0b90b; text-decoration:none;">🏠 بازگشت به خانه</a></p>
+    </header>
+
+    <main>
+        <div id="coin-detail" class="coin-detail-box">
+            <p class="loading-text">⏳ در حال دریافت...</p>
+        </div>
+
+        <div class="chart-buttons" id="detail-chart-buttons">
+            <button class="chart-period-btn" data-days="1">۱ روز</button>
+            <button class="chart-period-btn active" data-days="7">۷ روز</button>
+            <button class="chart-period-btn" data-days="30">۳۰ روز</button>
+            <button class="chart-period-btn" data-days="365">۱ سال</button>
+        </div>
+
+        <div class="chart-container" style="height: 320px;">
+            <canvas id="detail-chart"></canvas>
+        </div>
+
+        <div id="coin-stats" class="coin-stats-grid"></div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        const API = 'https://api.coingecko.com/api/v3';
+        const params = new URLSearchParams(location.search);
+        const coinId = params.get('id') || 'bitcoin';
+        let chartInst = null;
+
+        // تم
+        const themeBtn = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); themeBtn.textContent = '☀️'; }
+        else themeBtn.textContent = '🌙';
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeBtn.textContent = isLight ? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        async function loadCoin() {
+            try {
+                const res = await fetch(`${API}/coins/${coinId}?localization=false&tickers=false&community_data=false&developer_data=false`);
+                const data = await res.json();
+                const md = data.market_data;
+                document.getElementById('coin-title').textContent = `💰 ${data.name} (${data.symbol.toUpperCase()})`;
+                const price = md.current_price.usd.toLocaleString('en-US', { maximumFractionDigits: md.current_price.usd < 1 ? 6 : 2 });
+                const change = md.price_change_percentage_24h || 0;
+                const cls = change >= 0 ? 'positive' : 'negative';
+                const sign = change >= 0 ? '▲ +' : '▼ ';
+                document.getElementById('coin-detail').innerHTML = `
+                    <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
+                        <img src="${data.image.large}" style="width:60px; height:60px; border-radius:50%;">
+                        <div>
+                            <h2 style="color:#f0b90b;">${data.name}</h2>
+                            <p style="font-size:1.3rem; font-weight:bold; direction:ltr;">$${price}</p>
+                            <p class="${cls}" style="font-weight:bold;">${sign}${Math.abs(change).toFixed(2)}% (۲۴ ساعت)</p>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('coin-stats').innerHTML = `
+                    <div class="stat-card"><p class="stat-label">مارکت‌کپ</p><p class="stat-value">$${(md.market_cap.usd / 1e9).toFixed(2)}B</p></div>
+                    <div class="stat-card"><p class="stat-label">حجم ۲۴ ساعت</p><p class="stat-value">$${(md.total_volume.usd / 1e6).toFixed(2)}M</p></div>
+                    <div class="stat-card"><p class="stat-label">بالاترین ۲۴ ساعت</p><p class="stat-value">$${md.high_24h.usd.toLocaleString('en-US')}</p></div>
+                    <div class="stat-card"><p class="stat-label">پایین‌ترین ۲۴ ساعت</p><p class="stat-value">$${md.low_24h.usd.toLocaleString('en-US')}</p></div>
+                    <div class="stat-card"><p class="stat-label">رتبه بازار</p><p class="stat-value">#${data.market_cap_rank}</p></div>
+                    <div class="stat-card"><p class="stat-label">تغییرات ۷ روز</p><p class="stat-value">${(md.price_change_percentage_7d || 0).toFixed(2)}%</p></div>
+                `;
+                loadChart(7);
+            } catch (e) {
+                document.getElementById('coin-detail').innerHTML = '<p class="loading-text">❌ خطا در دریافت اطلاعات</p>';
+            }
+        }
+
+        async function loadChart(days) {
+            try {
+                const res = await fetch(`${API}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`);
+                const data = await res.json();
+                const prices = data.prices;
+                const ctx = document.getElementById('detail-chart').getContext('2d');
+                const labels = prices.map(p => {
+                    const d = new Date(p[0]);
+                    if (days === 1) return d.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+                    if (days === 365) return d.toLocaleDateString('fa-IR', { month: 'short', year: '2-digit' });
+                    return d.toLocaleDateString('fa-IR', { month: 'short', day: 'numeric' });
+                });
+                const values = prices.map(p => p[1]);
+                const isUp = values[values.length - 1] >= values[0];
+                const lineColor = isUp ? '#0ecb81' : '#f6465d';
+                const fillColor = isUp ? 'rgba(14,203,129,0.15)' : 'rgba(246,70,93,0.15)';
+                if (chartInst) chartInst.destroy();
+                chartInst = new Chart(ctx, {
+                    type: 'line',
+                    data: { labels, datasets: [{ label: 'قیمت', data: values, borderColor: lineColor, backgroundColor: fillColor, borderWidth: 2, fill: true, tension: 0.3, pointRadius: 0, pointHoverRadius: 5 }] },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { display: false }, tooltip: { backgroundColor: 'rgba(0,0,0,0.9)', callbacks: { label: (c) => '$' + c.parsed.y.toLocaleString('en-US', { maximumFractionDigits: 2 }) } } },
+                        scales: { x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 10 }, maxTicksLimit: 6 } }, y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 10 } } } }
+                    }
+                });
+            } catch (e) { console.error(e); }
+        }
+
+        document.querySelectorAll('#detail-chart-buttons .chart-period-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#detail-chart-buttons .chart-period-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                loadChart(parseInt(btn.dataset.days));
+            });
+        });
+
+        loadCoin();
+    </script>
+</body>
+</html>

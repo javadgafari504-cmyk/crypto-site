@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقایسه ارزهای دیجیتال | قیمت ارز دیجیتال</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <button id="theme-toggle">🌙</button>
+        <h1>⚖️ مقایسه ارزها</h1>
+        <p><a href="index.html" style="color:#f0b90b; text-decoration:none;">🏠 بازگشت به خانه</a></p>
+    </header>
+
+    <main>
+        <div class="compare-selectors">
+            <select id="coin1" class="compare-select"></select>
+            <select id="coin2" class="compare-select"></select>
+            <button id="compare-btn" class="wallet-btn" style="background: linear-gradient(135deg, #f0b90b, #d99a00); color: #222;">⚖️ مقایسه کن</button>
+        </div>
+
+        <div id="compare-result" class="compare-result">
+            <p class="loading-text">دو ارز رو انتخاب کن و دکمه مقایسه رو بزن</p>
+        </div>
+    </main>
+
+    <script>
+        const API = 'https://api.coingecko.com/api/v3';
+        let coins = [];
+
+        // تم
+        const themeBtn = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); themeBtn.textContent = '☀️'; }
+        else themeBtn.textContent = '🌙';
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeBtn.textContent = isLight ? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        async function loadCoins() {
+            const res = await fetch(`${API}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&price_change_percentage=24h`);
+            coins = await res.json();
+            const opts = coins.map(c => `<option value="${c.id}">${c.name} (${c.symbol.toUpperCase()})</option>`).join('');
+            document.getElementById('coin1').innerHTML = opts;
+            document.getElementById('coin2').innerHTML = opts;
+            document.getElementById('coin1').value = 'bitcoin';
+            document.getElementById('coin2').value = 'ethereum';
+        }
+
+        document.getElementById('compare-btn').addEventListener('click', () => {
+            const c1 = coins.find(c => c.id === document.getElementById('coin1').value);
+            const c2 = coins.find(c => c.id === document.getElementById('coin2').value);
+            if (!c1 || !c2) return;
+            const result = document.getElementById('compare-result');
+            result.innerHTML = `
+                <div class="compare-grid">
+                    ${renderCompareCard(c1)}
+                    ${renderCompareCard(c2)}
+                </div>
+                <table class="compare-table">
+                    <tr><th>ویژگی</th><th>${c1.symbol.toUpperCase()}</th><th>${c2.symbol.toUpperCase()}</th></tr>
+                    <tr><td>قیمت</td><td>$${c1.current_price.toLocaleString('en-US')}</td><td>$${c2.current_price.toLocaleString('en-US')}</td></tr>
+                    <tr><td>تغییرات ۲۴ ساعت</td><td class="${c1.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}">${c1.price_change_percentage_24h?.toFixed(2)}%</td><td class="${c2.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}">${c2.price_change_percentage_24h?.toFixed(2)}%</td></tr>
+                    <tr><td>مارکت‌کپ</td><td>$${(c1.market_cap / 1e9).toFixed(2)}B</td><td>$${(c2.market_cap / 1e9).toFixed(2)}B</td></tr>
+                    <tr><td>حجم ۲۴ ساعت</td><td>$${(c1.total_volume / 1e6).toFixed(2)}M</td><td>$${(c2.total_volume / 1e6).toFixed(2)}M</td></tr>
+                    <tr><td>رتبه</td><td>#${c1.market_cap_rank}</td><td>#${c2.market_cap_rank}</td></tr>
+                </table>
+            `;
+        });
+
+        function renderCompareCard(c) {
+            return `
+                <div class="crypto-card" style="cursor:default;">
+                    <img src="${c.image}" style="width:50px;height:50px;border-radius:50%;margin-bottom:10px;">
+                    <h3 style="font-size:1rem;">${c.name}</h3>
+                    <p class="symbol">${c.symbol.toUpperCase()}</p>
+                    <p class="price" style="font-size:1.1rem;">$${c.current_price.toLocaleString('en-US')}</p>
+                </div>`;
+        }
+
+        loadCoins();
+    </script>
+</body>
+</html>

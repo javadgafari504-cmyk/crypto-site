@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ماشین‌حساب تبدیل ارز | قیمت ارز دیجیتال</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <button id="theme-toggle">🌙</button>
+        <h1>🧮 ماشین‌حساب تبدیل</h1>
+        <p><a href="index.html" style="color:#f0b90b; text-decoration:none;">🏠 بازگشت به خانه</a></p>
+    </header>
+
+    <main>
+        <div class="calc-box">
+            <label class="calc-label">مقدار:</label>
+            <input type="number" id="amount" class="calc-input" value="1" step="any">
+
+            <label class="calc-label">از:</label>
+            <select id="from-coin" class="calc-input"></select>
+
+            <button id="swap-btn" style="width:100%; padding:12px; margin:15px 0; background:rgba(240,185,11,0.2); border:1px solid #f0b90b; border-radius:10px; color:#f0b90b; font-weight:bold; cursor:pointer; font-family:inherit;">🔄 تبدیل جای مبدأ و مقصد</button>
+
+            <label class="calc-label">به:</label>
+            <select id="to-coin" class="calc-input"></select>
+
+            <div id="calc-result" class="calc-result">نتیجه اینجا نمایش داده میشه</div>
+        </div>
+    </main>
+
+    <script>
+        const API = 'https://api.coingecko.com/api/v3';
+        let coins = [];
+        let tomanRate = 0;
+
+        const themeBtn = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); themeBtn.textContent = '☀️'; }
+        else themeBtn.textContent = '🌙';
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeBtn.textContent = isLight ? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        async function loadData() {
+            const [coinsRes, rateRes] = await Promise.all([
+                fetch(`${API}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1`),
+                fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/irr.json')
+            ]);
+            coins = await coinsRes.json();
+            const rateData = await rateRes.json();
+            if (rateData.irr?.usd) tomanRate = (1 / rateData.irr.usd) / 10;
+
+            const opts = coins.map(c => `<option value="${c.id}">${c.name} (${c.symbol.toUpperCase()})</option>`).join('');
+            const tomanOpt = `<option value="toman">تومان ایران</option>`;
+            document.getElementById('from-coin').innerHTML = opts + tomanOpt;
+            document.getElementById('to-coin').innerHTML = opts + tomanOpt;
+            document.getElementById('from-coin').value = 'bitcoin';
+            document.getElementById('to-coin').value = 'toman';
+            calculate();
+        }
+
+        function calculate() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            const fromId = document.getElementById('from-coin').value;
+            const toId = document.getElementById('to-coin').value;
+            const result = document.getElementById('calc-result');
+
+            if (fromId === toId) {
+                result.innerHTML = `${amount.toLocaleString('fa-IR')} = ${amount.toLocaleString('fa-IR')}`;
+                return;
+            }
+
+            let usdValue = 0;
+            if (fromId === 'toman') usdValue = amount / tomanRate;
+            else {
+                const c = coins.find(x => x.id === fromId);
+                usdValue = amount * (c?.current_price || 0);
+            }
+
+            let output = 0;
+            let outSymbol = '';
+            if (toId === 'toman') { output = usdValue * tomanRate; outSymbol = 'تومان'; }
+            else {
+                const c = coins.find(x => x.id === toId);
+                output = usdValue / (c?.current_price || 1);
+                outSymbol = c?.symbol.toUpperCase() || '';
+            }
+
+            result.innerHTML = `
+                <div style="font-size:0.9rem; opacity:0.7; margin-bottom:8px;">نتیجه تبدیل:</div>
+                <div style="font-size:1.5rem; font-weight:900; color:#0ecb81;">
+                    ${output.toLocaleString('fa-IR', { maximumFractionDigits: output < 1 ? 8 : 2 })} ${outSymbol}
+                </div>
+            `;
+        }
+
+        document.getElementById('amount').addEventListener('input', calculate);
+        document.getElementById('from-coin').addEventListener('change', calculate);
+        document.getElementById('to-coin').addEventListener('change', calculate);
+        document.getElementById('swap-btn').addEventListener('click', () => {
+            const from = document.getElementById('from-coin');
+            const to = document.getElementById('to-coin');
+            [from.value, to.value] = [to.value, from.value];
+            calculate();
+        });
+
+        loadData();
+    </script>
+</body>
+</html>

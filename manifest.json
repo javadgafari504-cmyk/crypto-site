@@ -1,0 +1,20 @@
+{
+    "name": "قیمت ارز دیجیتال",
+    "short_name": "ارز دیجیتال",
+    "description": "قیمت لحظه‌ای ۲۰۰ ارز دیجیتال برتر به دلار و تومان",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#0f0c29",
+    "theme_color": "#f0b90b",
+    "orientation": "portrait",
+    "lang": "fa",
+    "dir": "rtl",
+    "icons": [
+        {
+            "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22><rect width=%22512%22 height=%22512%22 fill=%22%230f0c29%22/><text x=%2250%25%22 y=%2255%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-size=%22300%22>💰</text></svg>",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}
