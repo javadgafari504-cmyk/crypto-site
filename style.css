@@ -1069,4 +1069,278 @@ body.light-mode button:focus-visible,
 body.light-mode input:focus-visible,
 body.light-mode a:focus-visible {
     outline-color: var(--gold-dark);
+}/* ============================================
+   بخش شاخص ترس و طمع، ترند، و صعودی/نزولی
+   ============================================ */
+
+.section-title {
+    color: #f0b90b;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+body.light-mode .section-title {
+    color: #d99a00;
+}
+
+.section-title.green {
+    color: #0ecb81;
+}
+
+.section-title.red {
+    color: #f6465d;
+}
+
+.loading-text {
+    text-align: center;
+    padding: 20px;
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+
+/* ===== شاخص ترس و طمع ===== */
+.fear-greed-section {
+    margin: 25px 0;
+    animation: fadeInUp 0.5s ease;
+}
+
+.fear-greed-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+body.light-mode .fear-greed-box {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.fg-value {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    direction: ltr;
+    font-family: 'Courier New', monospace;
+}
+
+.fg-label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.fg-bar-container {
+    position: relative;
+    height: 20px;
+    background: linear-gradient(to left, 
+        #f6465d 0%, 
+        #ff8c42 25%, 
+        #f0b90b 50%, 
+        #8dd35f 75%, 
+        #0ecb81 100%);
+    border-radius: 12px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.fg-pointer {
+    position: absolute;
+    top: -8px;
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border: 3px solid #333;
+    border-radius: 50%;
+    transform: translateX(50%);
+    transition: right 1s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.fg-labels-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 8px;
+}
+
+.fg-update {
+    font-size: 0.75rem;
+    opacity: 0.5;
+    margin-top: 15px;
+    direction: rtl;
+}
+
+/* ===== ارزهای ترند ===== */
+.trending-section {
+    margin: 25px 0;
+    animation: fadeInUp 0.5s ease 0.1s backwards;
+}
+
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.trending-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.trending-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(240, 185, 11, 0.5);
+    box-shadow: 0 6px 20px rgba(240, 185, 11, 0.15);
+}
+
+body.light-mode .trending-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.trending-card .fire {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 0.9rem;
+}
+
+.trending-card img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 6px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.trending-card h4 {
+    font-size: 0.8rem;
+    color: #f0b90b;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.light-mode .trending-card h4 {
+    color: #d99a00;
+}
+
+.trending-card .trend-rank {
+    font-size: 0.7rem;
+    color: #999;
+}
+
+/* ===== صعودی‌ها و نزولی‌ها ===== */
+.movers-section {
+    margin: 25px 0;
+    animation: fadeInUp 0.5s ease 0.2s backwards;
+}
+
+.movers-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.movers-column {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 15px 12px;
+}
+
+body.light-mode .movers-column {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.movers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mover-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    gap: 8px;
+}
+
+.mover-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(-3px);
+}
+
+body.light-mode .mover-item {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+body.light-mode .mover-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.mover-item img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.mover-item .mover-name {
+    flex: 1;
+    font-size: 0.8rem;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mover-item .mover-change {
+    font-size: 0.8rem;
+    font-weight: bold;
+    direction: ltr;
+    font-family: 'Courier New', monospace;
+}
+
+.mover-item .mover-change.positive {
+    color: #0ecb81;
+}
+
+.mover-item .mover-change.negative {
+    color: #f6465d;
+}
+
+/* موبایل */
+@media (max-width: 480px) {
+    .movers-columns {
+        grid-template-columns: 1fr;
+    }
+    
+    .fg-value {
+        font-size: 2.5rem;
+    }
+    
+    .trending-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
 }
