@@ -5,152 +5,285 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="theme-color" content="#0f0c29">
     
-    <title>قیمت لحظه‌ای ارز دیجیتال به تومان | ۲۰۰ ارز برتر</title>
-    <meta name="description" content="مشاهده قیمت لحظه‌ای، نمودار، شاخص ترس و طمع، ارزهای ترند و مقایسه ارزهای دیجیتال به دلار و تومان.">
-    <meta name="keywords" content="قیمت ارز دیجیتال، قیمت بیت کوین، شاخص ترس و طمع، ارز دیجیتال به تومان">
+    <title>کریپتو پرو | قیمت لحظه‌ای ارز دیجیتال، اخبار و ابزارها</title>
+    <meta name="description" content="کریپتو پرو - مرجع کامل ارز دیجیتال به فارسی. قیمت لحظه‌ای ۲۰۰ ارز برتر، نمودار حرفه‌ای، پرتفوی، ماشین‌حساب، اخبار و هشدار قیمت.">
+    <meta name="keywords" content="قیمت ارز دیجیتال، کریپتو، بیت کوین، اتریوم، پرتفوی، ماشین حساب، اخبار کریپتو">
     
     <meta property="og:type" content="website">
-    <meta property="og:title" content="قیمت لحظه‌ای ارز دیجیتال به تومان">
-    <meta property="og:description" content="۲۰۰ ارز دیجیتال برتر با نمودار، شاخص ترس و طمع و قیمت تومانی.">
+    <meta property="og:title" content="کریپتو پرو | مرجع کامل ارز دیجیتال به فارسی">
+    <meta property="og:description" content="قیمت لحظه‌ای ۲۰۰ ارز برتر، نمودار، پرتفوی و ابزارهای حرفه‌ای">
     <meta property="og:url" content="https://javadgafari504-cmyk.github.io/crypto-site/">
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- لودر اولیه -->
+    <div id="initial-loader">
+        <div class="loader-logo">💎</div>
+        <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+        <p class="loader-text">در حال بارگذاری...</p>
+    </div>
+
+    <!-- هدر -->
     <header role="banner">
-        <button id="theme-toggle" title="تغییر تم">🌙</button>
-        <h1>💰 قیمت لحظه‌ای ارز دیجیتال</h1>
-        <p id="last-update">در حال دریافت...</p>
+        <div class="header-top">
+            <button id="theme-toggle" title="تغییر تم">🌙</button>
+            <div class="logo">
+                <span class="logo-icon">💎</span>
+                <span class="logo-text">کریپتو پرو</span>
+            </div>
+            <button id="menu-toggle" title="منو">☰</button>
+        </div>
         
-        <nav class="main-nav">
+        <nav class="main-nav" id="main-nav">
             <a href="index.html" class="nav-link active">🏠 خانه</a>
-            <a href="compare.html" class="nav-link">⚖️ مقایسه</a>
+            <a href="markets.html" class="nav-link">📊 بازارها</a>
+            <a href="portfolio.html" class="nav-link">💼 پرتفوی</a>
             <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
-            <a href="about.html" class="nav-link">📄 درباره ما</a>
+            <a href="compare.html" class="nav-link">⚖️ مقایسه</a>
+            <a href="news.html" class="nav-link">📰 اخبار</a>
+            <a href="alerts.html" class="nav-link">🔔 هشدارها</a>
         </nav>
     </header>
 
     <main role="main">
 
+        <!-- نوار وضعیت بازار -->
+        <div class="market-bar">
+            <div class="market-item">
+                <span class="market-label">💰 کل مارکت‌کپ</span>
+                <span class="market-value" id="total-mcap">—</span>
+            </div>
+            <div class="market-item">
+                <span class="market-label">📊 حجم ۲۴h</span>
+                <span class="market-value" id="total-volume">—</span>
+            </div>
+            <div class="market-item">
+                <span class="market-label">👑 سهم BTC</span>
+                <span class="market-value" id="btc-dominance">—</span>
+            </div>
+            <div class="market-item">
+                <span class="market-label">🪙 تعداد ارزها</span>
+                <span class="market-value" id="coins-count">—</span>
+            </div>
+        </div>
+
+        <!-- شاخص ترس و طمع -->
         <section class="fear-greed-section" id="fear-greed-section">
             <h2 class="section-title">😱 شاخص ترس و طمع</h2>
             <div class="fear-greed-box" id="fear-greed-box">
-                <p class="loading-text">⏳ در حال دریافت...</p>
+                <div class="skeleton-hero">
+                    <div class="skeleton-line" style="width: 40%;"></div>
+                    <div class="skeleton-line" style="width: 60%;"></div>
+                    <div class="skeleton-line" style="width: 100%;"></div>
+                </div>
             </div>
         </section>
 
+        <!-- ارزهای ترند -->
         <section class="trending-section" id="trending-section">
             <h2 class="section-title">🔥 ارزهای ترند امروز</h2>
             <div class="trending-grid" id="trending-grid">
-                <p class="loading-text">⏳ در حال دریافت...</p>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
             </div>
         </section>
 
+        <!-- صعودی/نزولی -->
         <section class="movers-section">
+            <div class="movers-tabs">
+                <button class="movers-tab active" data-tab="24h">📅 ۲۴ ساعت</button>
+                <button class="movers-tab" data-tab="7d">📅 ۷ روز</button>
+                <button class="movers-tab" data-tab="30d">📅 ۳۰ روز</button>
+            </div>
             <div class="movers-columns">
                 <div class="movers-column">
                     <h2 class="section-title green">📈 بیشترین صعود</h2>
-                    <div class="movers-list" id="top-gainers"><p class="loading-text">⏳ ...</p></div>
+                    <div class="movers-list" id="top-gainers">
+                        <p class="loading-text">⏳ ...</p>
+                    </div>
                 </div>
                 <div class="movers-column">
                     <h2 class="section-title red">📉 بیشترین نزول</h2>
-                    <div class="movers-list" id="top-losers"><p class="loading-text">⏳ ...</p></div>
+                    <div class="movers-list" id="top-losers">
+                        <p class="loading-text">⏳ ...</p>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- هشدار قیمت -->
-        <section class="alerts-section" id="alerts-section">
-            <h2 class="section-title">🔔 هشدارهای قیمت من</h2>
-            <div id="alerts-list" class="alerts-list">
-                <p class="loading-text">هنوز هشداری تنظیم نکردی</p>
             </div>
         </section>
 
         <!-- کیف پول -->
         <section class="wallet-section">
-            <h2 class="section-title">🦊 کیف پول من</h2>
+            <h2 class="section-title">🦊 کیف پول متصل</h2>
             <div class="wallet-box">
                 <div id="wallet-not-installed" style="display: none;">
-                    <p class="wallet-warning">⚠️ Trust Wallet نصب نیست</p>
-                    <a href="https://trustwallet.com/download" target="_blank" class="wallet-btn">📥 نصب Trust Wallet</a>
+                    <p class="wallet-warning">⚠️ کیف پول نصب نیست</p>
+                    <a href="https://metamask.io/download/" target="_blank" class="wallet-btn">📥 نصب MetaMask</a>
                 </div>
-                <button id="connect-wallet-btn" class="wallet-btn">🦊 اتصال به Trust Wallet</button>
+                <button id="connect-wallet-btn" class="wallet-btn">
+                    <span>🦊</span> اتصال به MetaMask
+                </button>
                 <div id="wallet-info" style="display: none;">
-                    <p class="wallet-label">آدرس کیف پول:</p>
-                    <p class="wallet-address" id="wallet-address">-</p>
-                    <p class="wallet-label">موجودی:</p>
-                    <p class="wallet-balance" id="wallet-balance">-</p>
-                    <p class="wallet-label">شبکه:</p>
-                    <p class="wallet-network" id="wallet-network">-</p>
+                    <div class="wallet-stats">
+                        <div class="wallet-stat">
+                            <span class="wallet-label">آدرس</span>
+                            <span class="wallet-address" id="wallet-address">-</span>
+                        </div>
+                        <div class="wallet-stat">
+                            <span class="wallet-label">موجودی</span>
+                            <span class="wallet-balance" id="wallet-balance">-</span>
+                        </div>
+                        <div class="wallet-stat">
+                            <span class="wallet-label">شبکه</span>
+                            <span class="wallet-network" id="wallet-network">-</span>
+                        </div>
+                    </div>
                     <button id="disconnect-wallet-btn" class="wallet-btn disconnect">🔌 قطع اتصال</button>
                 </div>
                 <p id="wallet-status" class="wallet-status"></p>
             </div>
         </section>
 
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="🔍 جستجو (Bitcoin یا BTC)..." autocomplete="off">
-        </div>
-
-        <div class="filter-buttons" role="tablist">
-            <button id="show-all" class="filter-btn active">🌐 همه ارزها</button>
-            <button id="show-favorites" class="filter-btn">⭐ علاقه‌مندی‌ها (<span id="fav-count">0</span>)</button>
-        </div>
-
-        <section id="crypto-grid" aria-label="لیست ارزها">
-            <p style="text-align:center; padding:40px;">⏳ در حال دریافت قیمت‌ها...</p>
+        <!-- ابزارها -->
+        <section class="tools-section">
+            <h2 class="section-title">🛠️ ابزارهای سریع</h2>
+            <div class="tools-grid">
+                <a href="portfolio.html" class="tool-card">
+                    <span class="tool-icon">💼</span>
+                    <span class="tool-name">پرتفوی من</span>
+                    <span class="tool-desc">سود/ضرر خود را محاسبه کنید</span>
+                </a>
+                <a href="calculator.html" class="tool-card">
+                    <span class="tool-icon">🧮</span>
+                    <span class="tool-name">تبدیل ارز</span>
+                    <span class="tool-desc">تبدیل لحظه‌ای بین ارزها</span>
+                </a>
+                <a href="compare.html" class="tool-card">
+                    <span class="tool-icon">⚖️</span>
+                    <span class="tool-name">مقایسه</span>
+                    <span class="tool-desc">مقایسه دو ارز کنار هم</span>
+                </a>
+                <a href="alerts.html" class="tool-card">
+                    <span class="tool-icon">🔔</span>
+                    <span class="tool-name">هشدار قیمت</span>
+                    <span class="tool-desc">وقتی قیمت رسید، خبردار شو</span>
+                </a>
+            </div>
         </section>
 
-        <nav class="pagination" id="pagination">
+        <!-- جستجو و فیلتر -->
+        <section class="search-section">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="جستجوی ارز (Bitcoin، BTC، ...)" autocomplete="off">
+                <button id="clear-search" class="clear-btn" style="display: none;">✖</button>
+            </div>
+            
+            <div class="filter-row">
+                <div class="filter-group">
+                    <button id="show-all" class="filter-btn active">🌐 همه</button>
+                    <button id="show-favorites" class="filter-btn">⭐ علاقه‌مندی (<span id="fav-count">0</span>)</button>
+                    <button id="show-gainers" class="filter-btn">📈 صعودی</button>
+                    <button id="show-losers" class="filter-btn">📉 نزولی</button>
+                </div>
+                <select id="sort-select" class="sort-select">
+                    <option value="market_cap_desc">💰 مارکت‌کپ ⬇️</option>
+                    <option value="market_cap_asc">💰 مارکت‌کپ ⬆️</option>
+                    <option value="price_desc">💵 قیمت ⬇️</option>
+                    <option value="price_asc">💵 قیمت ⬆️</option>
+                    <option value="change_desc">📈 بیشترین صعود</option>
+                    <option value="change_asc">📉 بیشترین نزول</option>
+                </select>
+            </div>
+            
+            <div class="view-toggle">
+                <button id="view-grid" class="view-btn active" title="شبکه‌ای">⊞</button>
+                <button id="view-list" class="view-btn" title="لیستی">☰</button>
+            </div>
+        </section>
+
+        <!-- شبکه کارت‌ها -->
+        <section id="crypto-grid" class="crypto-grid" aria-label="لیست ارزها">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </section>
+
+        <!-- نتیجه خالی -->
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <div class="empty-icon">🔍</div>
+            <h3>چیزی پیدا نشد</h3>
+            <p>یه کلمه دیگه امتحان کن</p>
+        </div>
+
+        <!-- صفحه‌بندی -->
+        <nav class="pagination" id="pagination" aria-label="صفحه‌بندی">
+            <button id="first-page" class="page-btn" title="اولین صفحه">«</button>
             <button id="prev-page" class="page-btn">◀ قبلی</button>
-            <span id="page-info">صفحه ۱</span>
+            <div class="page-numbers" id="page-numbers"></div>
             <button id="next-page" class="page-btn">بعدی ▶</button>
+            <button id="last-page" class="page-btn" title="آخرین صفحه">»</button>
         </nav>
+
+        <div class="page-info-bar">
+            <span id="page-info">صفحه ۱</span>
+            <span id="results-info"></span>
+        </div>
 
     </main>
 
+    <!-- دکمه بازگشت به بالا -->
+    <button id="scroll-top" class="scroll-top" title="برو بالا">↑</button>
+
+    <!-- فوتر -->
     <footer role="contentinfo">
-        <p>داده‌ها از CoinGecko | به‌روزرسانی خودکار هر ۶۰ ثانیه</p>
-        <p style="margin-top: 8px; font-size: 0.75rem;">© ۲۰۲۶ سایت قیمت ارز دیجیتال</p>
-        <div style="margin-top: 20px; text-align: center;">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>💎 کریپتو پرو</h4>
+                <p>مرجع کامل قیمت و ابزارهای ارز دیجیتال به فارسی</p>
+            </div>
+            <div class="footer-col">
+                <h4>🔗 لینک‌های سریع</h4>
+                <a href="index.html">خانه</a>
+                <a href="markets.html">بازارها</a>
+                <a href="portfolio.html">پرتفوی</a>
+                <a href="news.html">اخبار</a>
+            </div>
+            <div class="footer-col">
+                <h4>🛠️ ابزارها</h4>
+                <a href="calculator.html">ماشین‌حساب</a>
+                <a href="compare.html">مقایسه</a>
+                <a href="alerts.html">هشدار قیمت</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>داده‌ها از CoinGecko</p>
+            <p>© ۲۰۲۶ کریپتو پرو | تمامی حقوق محفوظ است</p>
             <a href="https://hits.sh/javadgafari504-cmyk.github.io/crypto-site/" target="_blank">
                 <img alt="بازدیدها" src="https://hits.sh/javadgafari504-cmyk.github.io/crypto-site.svg"/>
             </a>
         </div>
     </footer>
 
-    <!-- مودال هشدار -->
-    <div id="alert-modal" class="modal">
-        <div class="modal-content" style="max-width: 400px;">
-            <button class="modal-close" id="alert-modal-close">✖</button>
-            <h2 style="color: #f0b90b; margin-bottom: 20px; text-align: center;">🔔 تنظیم هشدار قیمت</h2>
-            <p id="alert-coin-name" style="text-align: center; margin-bottom: 15px; font-weight: bold;"></p>
-            <label style="display: block; margin-bottom: 8px; font-size: 0.9rem;">قیمت هدف (دلار):</label>
-            <input type="number" id="alert-target-price" step="any" 
-                   style="width: 100%; padding: 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff; font-size: 1rem; margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 8px; font-size: 0.9rem;">نوع هشدار:</label>
-            <select id="alert-type" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff; font-size: 1rem; margin-bottom: 20px;">
-                <option value="above">📈 بالاتر از</option>
-                <option value="below">📉 پایین‌تر از</option>
-            </select>
-            <button id="save-alert-btn" class="wallet-btn" style="background: linear-gradient(135deg, #0ecb81, #059669);">💾 ذخیره هشدار</button>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-    <div id="chart-modal" class="modal">
-        <div class="modal-content">
+    <!-- مودال نمودار -->
+    <div id="chart-modal" class="modal" role="dialog" aria-modal="true">
+        <div class="modal-content modal-large">
             <button class="modal-close" id="modal-close">✖</button>
             <div class="modal-header">
                 <img id="modal-logo" src="" alt="" class="modal-logo">
@@ -158,24 +291,67 @@
                     <h2 id="modal-name">-</h2>
                     <p id="modal-price">-</p>
                 </div>
+                <span id="modal-rank" class="modal-rank"></span>
             </div>
-            <p id="modal-change">-</p>
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <span>تغییرات ۲۴h</span>
+                    <strong id="modal-change-24">-</strong>
+                </div>
+                <div class="modal-stat">
+                    <span>تغییرات ۷d</span>
+                    <strong id="modal-change-7">-</strong>
+                </div>
+                <div class="modal-stat">
+                    <span>مارکت‌کپ</span>
+                    <strong id="modal-mcap">-</strong>
+                </div>
+            </div>
             <div class="chart-buttons">
-                <button class="chart-period-btn active" data-days="1">۱ روز</button>
-                <button class="chart-period-btn" data-days="7">۷ روز</button>
+                <button class="chart-period-btn" data-days="1">۱ روز</button>
+                <button class="chart-period-btn active" data-days="7">۷ روز</button>
                 <button class="chart-period-btn" data-days="30">۳۰ روز</button>
+                <button class="chart-period-btn" data-days="90">۳ ماه</button>
                 <button class="chart-period-btn" data-days="365">۱ سال</button>
             </div>
             <div class="chart-container">
                 <canvas id="price-chart"></canvas>
             </div>
             <div class="modal-actions">
-                <button id="add-alert-btn" class="action-btn">🔔 هشدار قیمت</button>
-                <a id="view-details-btn" class="action-btn" href="#">📊 جزئیات کامل</a>
+                <button id="modal-fav-btn" class="action-btn">⭐ علاقه‌مندی</button>
+                <button id="modal-alert-btn" class="action-btn">🔔 هشدار</button>
+                <a id="modal-detail-btn" class="action-btn" href="#">📊 جزئیات کامل</a>
             </div>
         </div>
     </div>
 
+    <!-- مودال هشدار -->
+    <div id="alert-modal" class="modal">
+        <div class="modal-content" style="max-width: 420px;">
+            <button class="modal-close" id="alert-modal-close">✖</button>
+            <h2 class="modal-title">🔔 تنظیم هشدار قیمت</h2>
+            <p id="alert-coin-name" class="alert-coin-name"></p>
+            
+            <label class="form-label">قیمت هدف (دلار):</label>
+            <input type="number" id="alert-target-price" step="any" class="form-input">
+            
+            <label class="form-label">نوع هشدار:</label>
+            <div class="radio-group">
+                <label class="radio-item">
+                    <input type="radio" name="alert-type" value="above" checked>
+                    <span>📈 بالاتر از</span>
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="alert-type" value="below">
+                    <span>📉 پایین‌تر از</span>
+                </label>
+            </div>
+            
+            <button id="save-alert-btn" class="submit-btn">💾 ذخیره هشدار</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
