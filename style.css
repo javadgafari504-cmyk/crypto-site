@@ -1225,4 +1225,583 @@ body.light-mode .coin-detail-box + .chart-container {
         padding: 8px 14px;
         font-size: 0.8rem;
     }
+}/* ============================================
+   صفحه جزئیات ارز - نسخه حرفه‌ای
+   ============================================ */
+
+/* هیرو کارت */
+.coin-hero {
+    background: linear-gradient(135deg, rgba(240, 185, 11, 0.08), rgba(48, 43, 99, 0.4));
+    border: 1px solid rgba(240, 185, 11, 0.2);
+    border-radius: 20px;
+    padding: 25px 20px;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease;
+}
+
+.coin-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(240, 185, 11, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+body.light-mode .coin-hero {
+    background: linear-gradient(135deg, #fff, #f9f9fb);
+    border-color: rgba(217, 154, 0, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.hero-logo-wrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.hero-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 5px;
+    object-fit: contain;
+    box-shadow: 0 8px 25px rgba(240, 185, 11, 0.2);
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 8px 25px rgba(240, 185, 11, 0.2); }
+    50% { box-shadow: 0 8px 35px rgba(240, 185, 11, 0.4); }
+}
+
+.rank-badge {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: linear-gradient(135deg, #f0b90b, #d99a00);
+    color: #1a1738;
+    font-size: 0.75rem;
+    font-weight: 900;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 2px solid #1a1738;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode .rank-badge {
+    border-color: #fff;
+}
+
+.hero-info {
+    flex: 1;
+    min-width: 180px;
+}
+
+.hero-name {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #f0b90b;
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+
+body.light-mode .hero-name { color: #d99a00; }
+
+.hero-symbol {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin-bottom: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.hero-price-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.hero-price {
+    font-size: 1.8rem;
+    font-weight: 900;
+    direction: ltr;
+    font-family: 'Courier New', monospace;
+    letter-spacing: -1px;
+}
+
+.hero-change {
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: 'Courier New', monospace;
+}
+
+.hero-change.positive {
+    color: #0ecb81;
+    background: rgba(14, 203, 129, 0.15);
+}
+
+.hero-change.negative {
+    color: #f6465d;
+    background: rgba(246, 70, 93, 0.15);
+}
+
+.hero-bottom {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.light-mode .hero-bottom {
+    border-top-color: rgba(0, 0, 0, 0.06);
+}
+
+.hero-mini-stat {
+    text-align: center;
+}
+
+.mini-label {
+    display: block;
+    font-size: 0.7rem;
+    opacity: 0.6;
+    margin-bottom: 4px;
+    color: #999;
+}
+
+.mini-value {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    direction: ltr;
+    font-family: 'Courier New', monospace;
+}
+
+.mini-value.positive { color: #0ecb81; }
+.mini-value.negative { color: #f6465d; }
+
+/* اسکلتون لودینگ */
+.hero-skeleton {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.skeleton-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    background-size: 200% 100%;
+    animation: skeleton 1.5s infinite;
+}
+
+.skeleton-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.skeleton-line {
+    height: 16px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    background-size: 200% 100%;
+    animation: skeleton 1.5s infinite;
+    border-radius: 6px;
+}
+
+@keyframes skeleton {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* کارت نمودار */
+.chart-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.5s ease 0.1s backwards;
+}
+
+body.light-mode .chart-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chart-header h3 {
+    color: #f0b90b;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+body.light-mode .chart-header h3 { color: #d99a00; }
+
+.chart-change {
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: 'Courier New', monospace;
+}
+
+.chart-change.positive {
+    color: #0ecb81;
+    background: rgba(14, 203, 129, 0.15);
+}
+
+.chart-change.negative {
+    color: #f6465d;
+    background: rgba(246, 70, 93, 0.15);
+}
+
+/* دکمه‌های بازه زمانی */
+#detail-chart-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.5s ease 0.05s backwards;
+}
+
+#detail-chart-buttons .chart-period-btn {
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+#detail-chart-buttons .chart-period-btn:hover {
+    background: rgba(240, 185, 11, 0.15);
+    transform: translateY(-2px);
+    border-color: rgba(240, 185, 11, 0.4);
+}
+
+#detail-chart-buttons .chart-period-btn.active {
+    background: linear-gradient(135deg, rgba(240, 185, 11, 0.3), rgba(240, 185, 11, 0.15));
+    border-color: #f0b90b;
+    color: #f0b90b;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(240, 185, 11, 0.2);
+}
+
+body.light-mode #detail-chart-buttons .chart-period-btn {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #222;
+}
+
+body.light-mode #detail-chart-buttons .chart-period-btn.active {
+    background: rgba(217, 154, 0, 0.15);
+    border-color: #d99a00;
+    color: #d99a00;
+}
+
+/* شبکه آمار */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.5s ease 0.15s backwards;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 18px 14px;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(240, 185, 11, 0.6), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+}
+
+.stat-card:hover::before {
+    transform: translateX(100%);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(240, 185, 11, 0.35);
+    box-shadow: 0 10px 30px rgba(240, 185, 11, 0.12);
+}
+
+body.light-mode .stat-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 2px 5px rgba(240, 185, 11, 0.3));
+}
+
+.stat-label {
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-bottom: 6px;
+    color: #999;
+    font-weight: 500;
+}
+
+body.light-mode .stat-label { color: #666; }
+
+.stat-value {
+    font-size: 1rem;
+    font-weight: 900;
+    direction: ltr;
+    font-family: 'Courier New', monospace;
+    color: #f0b90b;
+    word-break: break-all;
+}
+
+body.light-mode .stat-value { color: #d99a00; }
+
+.stat-extra {
+    font-size: 0.7rem;
+    opacity: 0.6;
+    margin-top: 6px;
+    direction: ltr;
+}
+
+/* کارت توضیحات */
+.description-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 22px;
+    margin-top: 25px;
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.5s ease 0.2s backwards;
+}
+
+body.light-mode .description-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.description-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.description-header h2 {
+    color: #f0b90b;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+body.light-mode .description-header h2 { color: #d99a00; }
+
+.toggle-btn {
+    padding: 6px 14px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    color: #f0b90b;
+    background: rgba(240, 185, 11, 0.12);
+    border: 1px solid rgba(240, 185, 11, 0.3);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.toggle-btn:hover {
+    background: rgba(240, 185, 11, 0.25);
+}
+
+.description-text {
+    font-size: 0.88rem;
+    line-height: 1.9;
+    opacity: 0.85;
+    transition: max-height 0.4s ease;
+}
+
+/* کارت لینک‌ها */
+.links-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 22px;
+    margin-top: 20px;
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.5s ease 0.25s backwards;
+}
+
+body.light-mode .links-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.links-card h2 {
+    color: #f0b90b;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+body.light-mode .links-card h2 { color: #d99a00; }
+
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.link-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.link-btn:hover {
+    background: rgba(240, 185, 11, 0.15);
+    border-color: rgba(240, 185, 11, 0.4);
+    transform: translateY(-2px);
+}
+
+body.light-mode .link-btn {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.06);
+    color: #222;
+}
+
+.link-icon {
+    font-size: 1.1rem;
+}
+
+/* موبایل */
+@media (max-width: 480px) {
+    .hero-logo {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .hero-name {
+        font-size: 1.3rem;
+    }
+    
+    .hero-price {
+        font-size: 1.4rem;
+    }
+    
+    .hero-change {
+        font-size: 0.8rem;
+        padding: 4px 10px;
+    }
+    
+    .hero-bottom {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+    
+    .mini-label {
+        font-size: 0.62rem;
+    }
+    
+    .mini-value {
+        font-size: 0.72rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .stat-card {
+        padding: 14px 10px;
+    }
+    
+    .stat-icon {
+        font-size: 1.3rem;
+        margin-bottom: 5px;
+    }
+    
+    .stat-value {
+        font-size: 0.85rem;
+    }
+    
+    #detail-chart-buttons .chart-period-btn {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+    }
+    
+    .chart-container {
+        height: 240px !important;
+    }
+    
+    .description-card, .links-card {
+        padding: 16px;
+    }
 }
