@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ماشین‌حساب تبدیل | کریپتو پرو</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .calc-container {
+            max-width: 520px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px 25px;
+        }
+        body.light-mode .calc-container { background: #fff; }
+        
+        .calc-input-group { margin-bottom: 18px; }
+        .calc-input-group label {
+            display: block; font-size: 0.85rem; margin-bottom: 8px;
+            color: #f0b90b; font-weight: 800;
+        }
+        body.light-mode .calc-input-group label { color: #d99a00; }
+        
+        .calc-input-group input, .calc-input-group select {
+            width: 100%; padding: 14px 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px; color: #fff;
+            font-family: inherit; font-size: 1rem; outline: none;
+            transition: all 0.3s;
+        }
+        .calc-input-group input:focus, .calc-input-group select:focus {
+            border-color: #f0b90b;
+            box-shadow: 0 0 0 3px rgba(240,185,11,0.15);
+        }
+        body.light-mode .calc-input-group input,
+        body.light-mode .calc-input-group select {
+            background: rgba(0,0,0,0.04); color: #222;
+        }
+        
+        .swap-btn {
+            display: block; width: 100%; padding: 14px;
+            margin: 10px 0; background: rgba(240,185,11,0.2);
+            border: 1px solid #f0b90b; border-radius: 12px;
+            color: #f0b90b; font-family: inherit; font-weight: 800;
+            font-size: 0.9rem; cursor: pointer; transition: all 0.3s;
+        }
+        .swap-btn:hover { background: rgba(240,185,11,0.35); transform: scale(1.02); }
+        
+        .calc-result {
+            margin-top: 25px; padding: 25px;
+            background: linear-gradient(135deg, rgba(14,203,129,0.15), rgba(5,150,105,0.1));
+            border: 2px solid rgba(14,203,129,0.3);
+            border-radius: 16px; text-align: center;
+            min-height: 100px; display: flex;
+            flex-direction: column; justify-content: center;
+        }
+        .result-label { font-size: 0.8rem; opacity: 0.7; margin-bottom: 10px; }
+        .result-value { font-size: 1.8rem; font-weight: 900; color: #0ecb81; direction: ltr; font-family: 'Courier New', monospace; word-break: break-all; }
+        .result-sub { font-size: 0.8rem; opacity: 0.7; margin-top: 8px; direction: ltr; }
+        
+        .quick-amounts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+        .quick-amount {
+            padding: 6px 12px; font-size: 0.75rem;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 15px; color: inherit; font-family: inherit; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-amount:hover { background: rgba(240,185,11,0.2); border-color: #f0b90b; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <button id="theme-toggle">🌙</button>
+            <div class="logo"><span class="logo-icon">💎</span><span class="logo-text">کریپتو پرو</span></div>
+        </div>
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link">🏠 خانه</a>
+            <a href="markets.html" class="nav-link">📊 بازارها</a>
+            <a href="portfolio.html" class="nav-link">💼 پرتفوی</a>
+            <a href="calculator.html" class="nav-link active">🧮 ماشین‌حساب</a>
+            <a href="compare.html" class="nav-link">⚖️ مقایسه</a>
+            <a href="news.html" class="nav-link">📰 اخبار</a>
+            <a href="alerts.html" class="nav-link">🔔 هشدارها</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1 style="color:#f0b90b; text-align:center; margin-bottom:25px;">🧮 ماشین‌حساب تبدیل</h1>
+        
+        <div class="calc-container">
+            <div class="calc-input-group">
+                <label>مقدار</label>
+                <input type="number" id="amount" value="1" step="any">
+                <div class="quick-amounts">
+                    <button class="quick-amount" data-val="1">۱</button>
+                    <button class="quick-amount" data-val="10">۱۰</button>
+                    <button class="quick-amount" data-val="100">۱۰۰</button>
+                    <button class="quick-amount" data-val="1000">۱۰۰۰</button>
+                    <button class="quick-amount" data-val="10000">۱۰,۰۰۰</button>
+                </div>
+            </div>
+            
+            <div class="calc-input-group">
+                <label>از</label>
+                <select id="from-coin"></select>
+            </div>
+            
+            <button class="swap-btn" id="swap-btn">🔄 تبدیل جای مبدأ و مقصد</button>
+            
+            <div class="calc-input-group">
+                <label>به</label>
+                <select id="to-coin"></select>
+            </div>
+            
+            <div class="calc-result">
+                <div class="result-label">💰 نتیجه تبدیل</div>
+                <div class="result-value" id="result">—</div>
+                <div class="result-sub" id="result-sub"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer><div class="footer-bottom"><p>© ۲۰۲۶ کریپتو پرو</p></div></footer>
+
+    <script>
+        const API = 'https://api.coingecko.com/api/v3';
+        let coins = [];
+        let tomanRate = 0;
+
+        const themeBtn = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); themeBtn.textContent = '☀️'; }
+        else themeBtn.textContent = '🌙';
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            themeBtn.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        });
+
+        async function loadData() {
+            try {
+                const [coinsRes, rateRes] = await Promise.all([
+                    fetch(`${API}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1`),
+                    fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/irr.json')
+                ]);
+                coins = await coinsRes.json();
+                const rateData = await rateRes.json();
+                if (rateData.irr?.usd) tomanRate = (1 / rateData.irr.usd) / 10;
+
+                const opts = coins.map(c => `<option value="${c.id}">${c.name} (${c.symbol.toUpperCase()})</option>`).join('');
+                const tomanOpt = '<option value="toman">🇮🇷 تومان ایران</option>';
+                const usdOpt = '<option value="usd">💵 دلار آمریکا</option>';
+                
+                document.getElementById('from-coin').innerHTML = tomanOpt + usdOpt + opts;
+                document.getElementById('to-coin').innerHTML = tomanOpt + usdOpt + opts;
+                document.getElementById('from-coin').value = 'usd';
+                document.getElementById('to-coin').value = 'toman';
+                calculate();
+            } catch (e) { console.error(e); }
+        }
+
+        function getUsdValue(id, amount) {
+            if (id === 'toman') return amount / tomanRate;
+            if (id === 'usd') return amount;
+            const c = coins.find(x => x.id === id);
+            return amount * (c?.current_price || 0);
+        }
+
+        function calculate() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            const fromId = document.getElementById('from-coin').value;
+            const toId = document.getElementById('to-coin').value;
+            const result = document.getElementById('result');
+            const sub = document.getElementById('result-sub');
+            
+            if (fromId === toId) {
+                result.textContent = amount.toLocaleString('fa-IR');
+                sub.textContent = '';
+                return;
+            }
+            
+            const usdValue = getUsdValue(fromId, amount);
+            let output = 0;
+            let symbol = '';
+            
+            if (toId === 'toman') { output = usdValue * tomanRate; symbol = 'تومان'; }
+            else if (toId === 'usd') { output = usdValue; symbol = '$'; }
+            else {
+                const c = coins.find(x => x.id === toId);
+                output = usdValue / (c?.current_price || 1);
+                symbol = c?.symbol.toUpperCase() || '';
+            }
+            
+            if (symbol === '$') {
+                result.textContent = '$' + output.toLocaleString('en-US', { maximumFractionDigits: 4 });
+            } else if (symbol === 'تومان') {
+                result.textContent = output.toLocaleString('fa-IR', { maximumFractionDigits: 0 }) + ' تومان';
+            } else {
+                result.textContent = output.toLocaleString('en-US', { maximumFractionDigits: 6 }) + ' ' + symbol;
+            }
+            
+            sub.textContent = `ارزش دلاری: $${usdValue.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+        }
+
+        document.getElementById('amount').addEventListener('input', calculate);
+        document.getElementById('from-coin').addEventListener('change', calculate);
+        document.getElementById('to-coin').addEventListener('change', calculate);
+        document.getElementById('swap-btn').addEventListener('click', () => {
+            const from = document.getElementById('from-coin');
+            const to = document.getElementById('to-coin');
+            [from.value, to.value] = [to.value, from.value];
+            calculate();
+        });
+        
+        document.querySelectorAll('.quick-amount').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('amount').value = btn.dataset.val;
+                calculate();
+            });
+        });
+
+        loadData();
+    </script>
+</body>
+</html>
