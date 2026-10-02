@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     
     <title>قیمت لحظه‌ای ارز دیجیتال به تومان | ۲۰۰ ارز برتر با نمودار</title>
-    <meta name="description" content="مشاهده قیمت لحظه‌ای، نمودار ۷ روزه و درصد تغییرات ۲۰۰ ارز دیجیتال برتر به دلار و تومان. به‌روزرسانی خودکار هر ۶۰ ثانیه.">
-    <meta name="keywords" content="قیمت ارز دیجیتال، قیمت بیت کوین، قیمت اتریوم، ارز دیجیتال به تومان">
+    <meta name="description" content="مشاهده قیمت لحظه‌ای، نمودار ۷ روزه و درصد تغییرات ۲۰۰ ارز دیجیتال برتر به دلار و تومان. شاخص ترس و طمع، ارزهای ترند و صعودی/نزولی.">
+    <meta name="keywords" content="قیمت ارز دیجیتال، قیمت بیت کوین، شاخص ترس و طمع، ارزهای ترند، ارز دیجیتال به تومان">
     
     <meta property="og:type" content="website">
     <meta property="og:title" content="قیمت لحظه‌ای ارز دیجیتال به تومان | ۲۰۰ ارز برتر">
-    <meta property="og:description" content="مشاهده قیمت لحظه‌ای ۲۰۰ ارز دیجیتال برتر به دلار و تومان با نمودار ۷ روزه.">
+    <meta property="og:description" content="مشاهده قیمت لحظه‌ای ۲۰۰ ارز دیجیتال برتر با شاخص ترس و طمع و ارزهای ترند.">
     <meta property="og:url" content="https://javadgafari504-cmyk.github.io/crypto-site/">
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
@@ -27,6 +27,41 @@
 
     <main role="main">
 
+        <!-- ===== شاخص ترس و طمع ===== -->
+        <section class="fear-greed-section" id="fear-greed-section">
+            <h2 class="section-title">😱 شاخص ترس و طمع</h2>
+            <div class="fear-greed-box" id="fear-greed-box">
+                <p class="loading-text">⏳ در حال دریافت...</p>
+            </div>
+        </section>
+
+        <!-- ===== ارزهای ترند ===== -->
+        <section class="trending-section" id="trending-section">
+            <h2 class="section-title">🔥 ارزهای ترند امروز</h2>
+            <div class="trending-grid" id="trending-grid">
+                <p class="loading-text">⏳ در حال دریافت...</p>
+            </div>
+        </section>
+
+        <!-- ===== صعودی‌ها و نزولی‌ها ===== -->
+        <section class="movers-section">
+            <div class="movers-columns">
+                <div class="movers-column">
+                    <h2 class="section-title green">📈 بیشترین صعود</h2>
+                    <div class="movers-list" id="top-gainers">
+                        <p class="loading-text">⏳ ...</p>
+                    </div>
+                </div>
+                <div class="movers-column">
+                    <h2 class="section-title red">📉 بیشترین نزول</h2>
+                    <div class="movers-list" id="top-losers">
+                        <p class="loading-text">⏳ ...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== کادر جستجو ===== -->
         <div class="search-box">
             <input 
                 type="text" 
@@ -37,6 +72,7 @@
             >
         </div>
 
+        <!-- ===== دکمه‌های فیلتر ===== -->
         <div class="filter-buttons" role="tablist">
             <button id="show-all" class="filter-btn active" role="tab" aria-selected="true">
                 🌐 همه ارزها
@@ -46,16 +82,19 @@
             </button>
         </div>
 
+        <!-- ===== شبکه کارت‌ها ===== -->
         <section id="crypto-grid" aria-label="لیست ارزهای دیجیتال" aria-live="polite">
             <p style="text-align:center; padding:40px;">⏳ در حال دریافت قیمت‌ها...</p>
         </section>
 
+        <!-- ===== صفحه‌بندی ===== -->
         <nav class="pagination" id="pagination" aria-label="صفحه‌بندی">
             <button id="prev-page" class="page-btn" aria-label="صفحه قبلی">◀ قبلی</button>
             <span id="page-info" aria-live="polite">صفحه ۱</span>
             <button id="next-page" class="page-btn" aria-label="صفحه بعدی">بعدی ▶</button>
         </nav>
 
+        <!-- ===== لینک درباره ما ===== -->
         <nav style="text-align: center; padding: 10px 0 30px;" aria-label="لینک‌های مفید">
             <a href="about.html" style="color: #f0b90b; text-decoration: none; font-weight: bold; font-size: 0.95rem;">
                 📄 درباره ما
@@ -70,7 +109,6 @@
             © ۲۰۲۶ سایت قیمت ارز دیجیتال | تمامی حقوق محفوظ است
         </p>
         
-        <!-- شمارنده بازدید -->
         <div style="margin-top: 20px; text-align: center;">
             <a href="https://hits.sh/javadgafari504-cmyk.github.io/crypto-site/" target="_blank">
                 <img alt="بازدیدها" src="https://hits.sh/javadgafari504-cmyk.github.io/crypto-site.svg"/>
