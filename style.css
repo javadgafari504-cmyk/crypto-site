@@ -1,10 +1,5 @@
 /* ============================================
-   سایت قیمت ارز دیجیتال - استایل اصلی
-   نسخه: ۲.۰ | تاریخ: ۲۰۲۶
-   ============================================ */
-
-/* ============================================
-   ۱. ریست و متغیرها
+   سایت قیمت ارز دیجیتال - استایل کامل
    ============================================ */
 
 * {
@@ -15,1083 +10,134 @@
 }
 
 :root {
-    /* رنگ‌های اصلی */
     --gold: #f0b90b;
     --gold-dark: #d99a00;
     --green: #0ecb81;
     --red: #f6465d;
     --gray-text: #999;
-    --gray-light: rgba(255, 255, 255, 0.05);
-    --gray-border: rgba(255, 255, 255, 0.1);
-    
-    /* انیمیشن */
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.3s ease;
-    --transition-slow: 0.4s ease;
-    
-    /* سایه‌ها */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 8px 20px rgba(240, 185, 11, 0.15);
-    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.2);
+    --bg-dark: #0f0c29;
+    --bg-card: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 255, 255, 0.1);
 }
 
-/* ============================================
-   ۲. بدنه و تم‌ها
-   ============================================ */
-
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
-    font-family: Tahoma, 'Segoe UI', Arial, sans-serif;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
     background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     background-attachment: fixed;
     color: #fff;
     min-height: 100vh;
     padding-bottom: 40px;
-    transition: background var(--transition-slow), color var(--transition-slow);
-    line-height: 1.5;
+    transition: background 0.4s, color 0.4s;
+    line-height: 1.6;
     overflow-x: hidden;
 }
 
 body.light-mode {
     background: linear-gradient(135deg, #f5f7fa, #e8ecf1, #dfe6ec);
-    background-attachment: fixed;
     color: #222;
 }
 
-/* ============================================
-   ۳. هدر
-   ============================================ */
-
+/* هدر */
 header {
     text-align: center;
-    padding: 45px 20px 25px;
+    padding: 35px 20px 15px;
     position: relative;
     animation: fadeInDown 0.5s ease;
 }
 
 header h1 {
     color: var(--gold);
-    font-size: 1.7rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-    letter-spacing: -0.5px;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    font-weight: 900;
     text-shadow: 0 2px 10px rgba(240, 185, 11, 0.2);
 }
 
-body.light-mode header h1 {
-    color: var(--gold-dark);
-    text-shadow: 0 2px 10px rgba(217, 154, 0, 0.15);
-}
+body.light-mode header h1 { color: var(--gold-dark); }
 
 #last-update {
     opacity: 0.6;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     direction: ltr;
     font-family: 'Courier New', monospace;
 }
 
-/* ============================================
-   ۴. دکمه تغییر تم
-   ============================================ */
+/* نوار ناوبری */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    padding: 0 10px;
+}
+
+.nav-link {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    color: inherit;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    background: rgba(240, 185, 11, 0.15);
+    border-color: rgba(240, 185, 11, 0.4);
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    background: rgba(240, 185, 11, 0.25);
+    border-color: var(--gold);
+    color: var(--gold);
+    font-weight: bold;
+}
+
+body.light-mode .nav-link { background: rgba(0,0,0,0.04); }
+body.light-mode .nav-link.active { background: rgba(217,154,0,0.15); color: var(--gold-dark); }
 
 #theme-toggle {
     position: absolute;
     top: 20px;
     left: 20px;
-    width: 45px;
-    height: 45px;
-    font-size: 1.4rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--gray-border);
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--transition-normal);
-    color: inherit;
-    backdrop-filter: blur(10px);
-}
-
-#theme-toggle:hover {
-    background: rgba(240, 185, 11, 0.2);
-    transform: rotate(20deg) scale(1.1);
-    border-color: var(--gold);
-}
-
-#theme-toggle:active {
-    transform: rotate(20deg) scale(0.95);
-}
-
-body.light-mode #theme-toggle {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-}
-
-body.light-mode #theme-toggle:hover {
-    background: rgba(217, 154, 0, 0.15);
-    border-color: var(--gold-dark);
-}
-
-/* ============================================
-   ۵. بخش اصلی
-   ============================================ */
-
-main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    animation: fadeIn 0.6s ease;
-}
-
-/* ============================================
-   ۶. کادر جستجو
-   ============================================ */
-
-.search-box {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    animation: fadeInUp 0.5s ease 0.1s backwards;
-}
-
-#search-input {
-    width: 100%;
-    max-width: 500px;
-    padding: 15px 22px;
-    font-family: inherit;
-    font-size: 1rem;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--gray-border);
-    border-radius: 30px;
-    outline: none;
-    transition: all var(--transition-normal);
-    direction: rtl;
-    backdrop-filter: blur(10px);
-}
-
-#search-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-#search-input:focus {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--gold);
-    box-shadow: 0 0 0 4px rgba(240, 185, 11, 0.15);
-    transform: translateY(-2px);
-}
-
-body.light-mode #search-input {
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.1);
-    color: #222;
-}
-
-body.light-mode #search-input::placeholder {
-    color: rgba(0, 0, 0, 0.4);
-}
-
-body.light-mode #search-input:focus {
-    border-color: var(--gold-dark);
-    box-shadow: 0 0 0 4px rgba(217, 154, 0, 0.15);
-}
-
-/* ============================================
-   ۷. دکمه‌های فیلتر
-   ============================================ */
-
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-    animation: fadeInUp 0.5s ease 0.2s backwards;
-}
-
-.filter-btn {
-    padding: 11px 22px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--gray-border);
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-    font-weight: 500;
-    backdrop-filter: blur(10px);
-}
-
-.filter-btn:hover {
-    background: rgba(240, 185, 11, 0.15);
-    transform: translateY(-2px);
-    border-color: rgba(240, 185, 11, 0.4);
-}
-
-.filter-btn:active {
-    transform: translateY(0) scale(0.98);
-}
-
-.filter-btn.active {
-    background: rgba(240, 185, 11, 0.25);
-    border-color: var(--gold);
-    color: var(--gold);
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(240, 185, 11, 0.2);
-}
-
-body.light-mode .filter-btn {
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.1);
-    color: #222;
-}
-
-body.light-mode .filter-btn:hover {
-    background: rgba(217, 154, 0, 0.1);
-}
-
-body.light-mode .filter-btn.active {
-    background: rgba(217, 154, 0, 0.15);
-    border-color: var(--gold-dark);
-    color: var(--gold-dark);
-    box-shadow: 0 4px 15px rgba(217, 154, 0, 0.15);
-}
-
-/* ============================================
-   ۸. شبکه کارت‌ها
-   ============================================ */
-
-#crypto-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 12px;
-    animation: fadeIn 0.6s ease 0.3s backwards;
-}
-
-/* ============================================
-   ۹. کارت ارز
-   ============================================ */
-
-.crypto-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--gray-border);
-    border-radius: 12px;
-    padding: 15px 12px;
-    text-align: center;
-    transition: transform var(--transition-normal), 
-                box-shadow var(--transition-normal),
-                border-color var(--transition-normal);
-    position: relative;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-    animation: cardFadeIn 0.4s ease backwards;
-}
-
-/* انیمیشن ورود کارت‌ها */
-@keyframes cardFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.crypto-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(240, 185, 11, 0.4);
-    box-shadow: var(--shadow-md);
-}
-
-.crypto-card:active {
-    transform: translateY(-2px) scale(0.99);
-}
-
-body.light-mode .crypto-card {
-    background: #fff;
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: var(--shadow-sm);
-}
-
-body.light-mode .crypto-card:hover {
-    border-color: rgba(217, 154, 0, 0.4);
-    box-shadow: 0 8px 20px rgba(217, 154, 0, 0.15);
-}
-
-/* ============================================
-   ۱۰. شماره رتبه
-   ============================================ */
-
-.crypto-card .rank {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: rgba(240, 185, 11, 0.2);
-    color: var(--gold);
-    font-size: 0.65rem;
-    font-weight: bold;
-    padding: 3px 7px;
-    border-radius: 8px;
-    backdrop-filter: blur(5px);
-    z-index: 1;
-}
-
-body.light-mode .crypto-card .rank {
-    background: rgba(217, 154, 0, 0.15);
-    color: var(--gold-dark);
-}
-
-/* ============================================
-   ۱۱. لوگوی ارز
-   ============================================ */
-
-.crypto-card .coin-logo {
-    width: 28px;
-    height: 28px;
-    margin-bottom: 8px;
-    border-radius: 50%;
-    object-fit: contain;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2px;
-    transition: transform var(--transition-normal);
-}
-
-.crypto-card:hover .coin-logo {
-    transform: scale(1.15) rotate(5deg);
-}
-
-body.light-mode .crypto-card .coin-logo {
-    background: rgba(0, 0, 0, 0.03);
-}
-
-/* ============================================
-   ۱۲. اسم و نماد ارز
-   ============================================ */
-
-.crypto-card h3 {
-    color: var(--gold);
-    font-size: 0.85rem;
-    margin-bottom: 3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: bold;
-}
-
-body.light-mode .crypto-card h3 {
-    color: var(--gold-dark);
-}
-
-.crypto-card .symbol {
-    font-size: 0.7rem;
-    color: var(--gray-text);
-    margin-bottom: 6px;
-    direction: ltr;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
-body.light-mode .crypto-card .symbol {
-    color: #777;
-}
-
-/* ============================================
-   ۱۳. قیمت‌ها
-   ============================================ */
-
-.crypto-card .price {
-    font-size: 0.95rem;
-    font-weight: bold;
-    margin-bottom: 4px;
-    direction: ltr;
-    font-family: 'Courier New', monospace;
-    letter-spacing: -0.3px;
-}
-
-.crypto-card .price-toman {
-    font-size: 0.75rem;
-    color: var(--green);
-    margin-bottom: 5px;
-    font-weight: bold;
-    direction: rtl;
-}
-
-body.light-mode .crypto-card .price-toman {
-    color: #059669;
-}
-
-/* ============================================
-   ۱۴. درصد تغییرات
-   ============================================ */
-
-.crypto-card .change {
-    font-weight: bold;
-    font-size: 0.75rem;
-    direction: ltr;
-    font-family: 'Courier New', monospace;
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 8px;
-    transition: all var(--transition-normal);
-}
-
-.crypto-card .change.positive {
-    color: var(--green);
-    background: rgba(14, 203, 129, 0.1);
-}
-
-.crypto-card .change.negative {
-    color: var(--red);
-    background: rgba(246, 70, 93, 0.1);
-}
-
-.crypto-card:hover .change {
-    transform: scale(1.05);
-}
-
-/* ============================================
-   ۱۵. دکمه علاقه‌مندی (ستاره)
-   ============================================ */
-
-.crypto-card .favorite-btn {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    width: 28px;
-    height: 28px;
-    font-size: 0.9rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--gray-border);
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--transition-fast);
-    padding: 0;
-    line-height: 1;
-    z-index: 2;
-    backdrop-filter: blur(5px);
-    color: inherit;
-}
-
-.crypto-card .favorite-btn:hover {
-    background: rgba(240, 185, 11, 0.3);
-    transform: scale(1.2) rotate(-10deg);
-    border-color: var(--gold);
-}
-
-.crypto-card .favorite-btn:active {
-    transform: scale(0.95);
-}
-
-.crypto-card .favorite-btn.active {
-    background: rgba(240, 185, 11, 0.4);
-    border-color: var(--gold);
-    box-shadow: 0 0 10px rgba(240, 185, 11, 0.4);
-}
-
-body.light-mode .crypto-card .favorite-btn {
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.1);
-}
-
-body.light-mode .crypto-card .favorite-btn:hover {
-    background: rgba(217, 154, 0, 0.2);
-    border-color: var(--gold-dark);
-}
-
-/* ============================================
-   ۱۶. پیام‌های حالت خالی
-   ============================================ */
-
-.empty-favorites {
-    text-align: center;
-    grid-column: 1 / -1;
-    padding: 60px 20px;
-    opacity: 0.7;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    animation: fadeIn 0.5s ease;
-}
-
-.empty-favorites .big-star {
-    font-size: 3.5rem;
-    display: block;
-    margin-bottom: 15px;
-    animation: starPulse 2s ease-in-out infinite;
-}
-
-@keyframes starPulse {
-    0%, 100% { transform: scale(1); opacity: 0.7; }
-    50% { transform: scale(1.15); opacity: 1; }
-}
-
-.no-results {
-    text-align: center;
-    grid-column: 1 / -1;
-    padding: 60px 20px;
-    opacity: 0.7;
-    font-size: 1.1rem;
-    animation: fadeIn 0.5s ease;
-}
-
-.loading {
-    text-align: center;
-    grid-column: 1 / -1;
-    padding: 60px 20px;
-    opacity: 0.7;
-    font-size: 1.1rem;
-    animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-}
-
-/* ============================================
-   ۱۷. صفحه‌بندی
-   ============================================ */
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin: 30px 0;
-    padding: 20px;
-    flex-wrap: wrap;
-    animation: fadeInUp 0.5s ease;
-}
-
-.page-btn {
-    padding: 11px 22px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--gold);
-    background: rgba(240, 185, 11, 0.15);
-    border: 1px solid rgba(240, 185, 11, 0.4);
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-    backdrop-filter: blur(10px);
-}
-
-.page-btn:hover:not(:disabled) {
-    background: rgba(240, 185, 11, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(240, 185, 11, 0.25);
-}
-
-.page-btn:active:not(:disabled) {
-    transform: translateY(0) scale(0.98);
-}
-
-.page-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-#page-info {
-    font-size: 0.95rem;
-    font-weight: bold;
-    opacity: 0.85;
-    min-width: 130px;
-    text-align: center;
-    direction: rtl;
-}
-
-body.light-mode .page-btn {
-    color: var(--gold-dark);
-    background: rgba(217, 154, 0, 0.1);
-    border-color: rgba(217, 154, 0, 0.3);
-}
-
-body.light-mode .page-btn:hover:not(:disabled) {
-    background: rgba(217, 154, 0, 0.2);
-    box-shadow: 0 6px 20px rgba(217, 154, 0, 0.2);
-}
-
-/* ============================================
-   ۱۸. پنجره Modal نمودار
-   ============================================ */
-
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(8px);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    animation: fadeIn var(--transition-normal);
-}
-
-.modal.open {
-    display: flex;
-}
-
-.modal-content {
-    background: linear-gradient(135deg, #1a1738, #2a2454);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 25px;
-    width: 100%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    animation: slideUp var(--transition-normal);
-    box-shadow: var(--shadow-lg);
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-body.light-mode .modal-content {
-    background: #fff;
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: var(--shadow-lg);
-}
-
-.modal-close {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    width: 36px;
-    height: 36px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--gray-border);
-    border-radius: 50%;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-close:hover {
-    background: rgba(246, 70, 93, 0.3);
-    transform: rotate(90deg);
-    border-color: var(--red);
-}
-
-body.light-mode .modal-close {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-    color: #222;
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-    padding-top: 10px;
-}
-
-.modal-logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: contain;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 3px;
-}
-
-.modal-header h2 {
-    color: var(--gold);
+    width: 42px;
+    height: 42px;
     font-size: 1.3rem;
-    margin-bottom: 4px;
-    font-weight: bold;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    color: inherit;
+    z-index: 10;
 }
 
-body.light-mode .modal-header h2 {
-    color: var(--gold-dark);
-}
+#theme-toggle:hover { transform: rotate(20deg) scale(1.1); }
 
-#modal-price {
-    font-size: 1.1rem;
-    font-weight: bold;
-    direction: ltr;
-    font-family: 'Courier New', monospace;
-    opacity: 0.9;
-}
+body.light-mode #theme-toggle { background: rgba(0,0,0,0.05); }
 
-#modal-change {
-    font-weight: bold;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 10px;
-}
-
-#modal-change.positive {
-    color: var(--green);
-    background: rgba(14, 203, 129, 0.1);
-}
-
-#modal-change.negative {
-    color: var(--red);
-    background: rgba(246, 70, 93, 0.1);
-}
-
-.chart-container {
-    position: relative;
-    height: 280px;
-    margin-bottom: 15px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    padding: 15px;
-}
-
-body.light-mode .chart-container {
-    background: rgba(0, 0, 0, 0.02);
-}
-
-.chart-label {
-    text-align: center;
-    opacity: 0.5;
-    font-size: 0.8rem;
-}
-
-/* ============================================
-   ۱۹. فوتر
-   ============================================ */
-
-footer {
-    text-align: center;
-    padding: 30px 20px;
-    opacity: 0.5;
-    font-size: 0.8rem;
-    line-height: 1.8;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    margin-top: 20px;
-}
-
-body.light-mode footer {
-    border-top-color: rgba(0, 0, 0, 0.05);
-}
-
-/* ============================================
-   ۲۰. انیمیشن‌های عمومی
-   ============================================ */
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ============================================
-   ۲۱. اسکرول‌بار سفارشی
-   ============================================ */
-
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.03);
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(240, 185, 11, 0.3);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(240, 185, 11, 0.5);
-}
-
-body.light-mode ::-webkit-scrollbar-thumb {
-    background: rgba(217, 154, 0, 0.3);
-}
-
-/* ============================================
-   ۲۲. واکنش‌گرا (Responsive) - تبلت
-   ============================================ */
-
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 1.5rem;
-    }
-    
-    #crypto-grid {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 10px;
-    }
-    
-    .modal-content {
-        padding: 20px;
-    }
-    
-    .chart-container {
-        height: 240px;
-    }
-}
-
-/* ============================================
-   ۲۳. واکنش‌گرا (Responsive) - موبایل
-   ============================================ */
-
-@media (max-width: 480px) {
-    header {
-        padding: 35px 15px 20px;
-    }
-    
-    header h1 {
-        font-size: 1.3rem;
-    }
-    
-    #theme-toggle {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-        top: 15px;
-        left: 15px;
-    }
-    
-    #search-input {
-        padding: 13px 18px;
-        font-size: 0.9rem;
-    }
-    
-    .filter-btn {
-        padding: 9px 16px;
-        font-size: 0.82rem;
-    }
-    
-    #crypto-grid {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 8px;
-    }
-    
-    .crypto-card {
-        padding: 12px 10px;
-    }
-    
-    .crypto-card .coin-logo {
-        width: 26px;
-        height: 26px;
-    }
-    
-    .crypto-card h3 {
-        font-size: 0.8rem;
-    }
-    
-    .crypto-card .price {
-        font-size: 0.88rem;
-    }
-    
-    .crypto-card .price-toman {
-        font-size: 0.7rem;
-    }
-    
-    .crypto-card .change {
-        font-size: 0.7rem;
-    }
-    
-    .page-btn {
-        padding: 9px 16px;
-        font-size: 0.82rem;
-    }
-    
-    #page-info {
-        font-size: 0.85rem;
-        min-width: 100px;
-    }
-    
-    .modal-content {
-        padding: 18px;
-        border-radius: 12px;
-    }
-    
-    .modal-header h2 {
-        font-size: 1.1rem;
-    }
-    
-    .modal-logo {
-        width: 42px;
-        height: 42px;
-    }
-    
-    .chart-container {
-        height: 220px;
-        padding: 10px;
-    }
-}
-
-/* ============================================
-   ۲۴. موبایل‌های خیلی کوچیک
-   ============================================ */
-
-@media (max-width: 360px) {
-    header h1 {
-        font-size: 1.15rem;
-    }
-    
-    #crypto-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-    }
-    
-    .crypto-card {
-        padding: 10px 8px;
-    }
-    
-    .crypto-card .coin-logo {
-        width: 24px;
-        height: 24px;
-    }
-    
-    .crypto-card h3 {
-        font-size: 0.75rem;
-    }
-    
-    .crypto-card .price {
-        font-size: 0.82rem;
-    }
-}
-
-/* ============================================
-   ۲۵. حالت چاپ
-   ============================================ */
-
-@media print {
-    body {
-        background: #fff;
-        color: #000;
-    }
-    
-    #theme-toggle,
-    .search-box,
-    .filter-buttons,
-    .pagination,
-    .favorite-btn {
-        display: none !important;
-    }
-    
-    .crypto-card {
-        border: 1px solid #ccc;
-        page-break-inside: avoid;
-    }
-}
-
-/* ============================================
-   ۲۶. کاربرانی که انیمیشن کمتر می‌خوان
-   ============================================ */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* ============================================
-   ۲۷. حالت انتخاب متن
-   ============================================ */
-
-::selection {
-    background: rgba(240, 185, 11, 0.3);
-    color: #fff;
-}
-
-body.light-mode ::selection {
-    background: rgba(217, 154, 0, 0.3);
-    color: #222;
-}
-
-/* ============================================
-   ۲۸. حالت فوکوس (دسترس‌پذیری)
-   ============================================ */
-
-button:focus-visible,
-input:focus-visible,
-a:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
-}
-
-body.light-mode button:focus-visible,
-body.light-mode input:focus-visible,
-body.light-mode a:focus-visible {
-    outline-color: var(--gold-dark);
-}/* ============================================
-   بخش شاخص ترس و طمع، ترند، و صعودی/نزولی
-   ============================================ */
+main { max-width: 900px; margin: 0 auto; padding: 15px 20px; }
 
 .section-title {
-    color: #f0b90b;
-    font-size: 1.1rem;
-    margin-bottom: 15px;
+    color: var(--gold);
+    font-size: 1.05rem;
+    margin-bottom: 12px;
     text-align: center;
-    font-weight: bold;
+    font-weight: 700;
 }
 
-body.light-mode .section-title {
-    color: #d99a00;
-}
-
-.section-title.green {
-    color: #0ecb81;
-}
-
-.section-title.red {
-    color: #f6465d;
-}
+body.light-mode .section-title { color: var(--gold-dark); }
+.section-title.green { color: var(--green); }
+.section-title.red { color: var(--red); }
 
 .loading-text {
     text-align: center;
@@ -1100,98 +146,71 @@ body.light-mode .section-title {
     font-size: 0.9rem;
 }
 
-/* ===== شاخص ترس و طمع ===== */
-.fear-greed-section {
-    margin: 25px 0;
-    animation: fadeInUp 0.5s ease;
-}
-
+/* شاخص ترس و طمع */
+.fear-greed-section { margin: 20px 0; }
 .fear-greed-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 25px;
+    padding: 20px;
     text-align: center;
     backdrop-filter: blur(10px);
 }
-
-body.light-mode .fear-greed-box {
-    background: #fff;
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
+body.light-mode .fear-greed-box { background: #fff; border-color: rgba(0,0,0,0.08); }
 
 .fg-value {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: 5px;
     direction: ltr;
     font-family: 'Courier New', monospace;
 }
 
-.fg-label {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
+.fg-label { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; }
 
 .fg-bar-container {
     position: relative;
-    height: 20px;
-    background: linear-gradient(to left, 
-        #f6465d 0%, 
-        #ff8c42 25%, 
-        #f0b90b 50%, 
-        #8dd35f 75%, 
-        #0ecb81 100%);
-    border-radius: 12px;
+    height: 18px;
+    background: linear-gradient(to left, #f6465d 0%, #ff8c42 25%, #f0b90b 50%, #8dd35f 75%, #0ecb81 100%);
+    border-radius: 10px;
     margin: 20px 0;
-    overflow: hidden;
 }
 
 .fg-pointer {
     position: absolute;
-    top: -8px;
+    top: -9px;
     width: 36px;
     height: 36px;
     background: #fff;
     border: 3px solid #333;
     border-radius: 50%;
     transform: translateX(50%);
-    transition: right 1s ease;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transition: right 1.5s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
 .fg-labels-row {
     display: flex;
     justify-content: space-between;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     opacity: 0.7;
-    margin-top: 8px;
+    margin-top: 5px;
 }
 
-.fg-update {
-    font-size: 0.75rem;
-    opacity: 0.5;
-    margin-top: 15px;
-    direction: rtl;
-}
+.fg-update { font-size: 0.72rem; opacity: 0.5; margin-top: 12px; }
 
-/* ===== ارزهای ترند ===== */
-.trending-section {
-    margin: 25px 0;
-    animation: fadeInUp 0.5s ease 0.1s backwards;
-}
+/* ارزهای ترند */
+.trending-section, .movers-section, .alerts-section { margin: 20px 0; }
 
 .trending-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 10px;
 }
 
 .trending-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 12px 10px;
     text-align: center;
@@ -1203,53 +222,17 @@ body.light-mode .fear-greed-box {
 .trending-card:hover {
     transform: translateY(-3px);
     border-color: rgba(240, 185, 11, 0.5);
-    box-shadow: 0 6px 20px rgba(240, 185, 11, 0.15);
 }
 
-body.light-mode .trending-card {
-    background: #fff;
-    border-color: rgba(0, 0, 0, 0.08);
-}
+body.light-mode .trending-card { background: #fff; border-color: rgba(0,0,0,0.08); }
 
-.trending-card .fire {
-    position: absolute;
-    top: 5px;
-    right: 8px;
-    font-size: 0.9rem;
-}
+.trending-card .fire { position: absolute; top: 5px; right: 8px; font-size: 0.9rem; }
+.trending-card img { width: 30px; height: 30px; margin-bottom: 6px; border-radius: 50%; object-fit: contain; }
+.trending-card h4 { font-size: 0.8rem; color: var(--gold); margin-bottom: 3px; }
+body.light-mode .trending-card h4 { color: var(--gold-dark); }
+.trending-card .trend-rank { font-size: 0.7rem; color: var(--gray-text); }
 
-.trending-card img {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 6px;
-    border-radius: 50%;
-    object-fit: contain;
-}
-
-.trending-card h4 {
-    font-size: 0.8rem;
-    color: #f0b90b;
-    margin-bottom: 3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-body.light-mode .trending-card h4 {
-    color: #d99a00;
-}
-
-.trending-card .trend-rank {
-    font-size: 0.7rem;
-    color: #999;
-}
-
-/* ===== صعودی‌ها و نزولی‌ها ===== */
-.movers-section {
-    margin: 25px 0;
-    animation: fadeInUp 0.5s ease 0.2s backwards;
-}
-
+/* صعودی/نزولی */
 .movers-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1263,84 +246,538 @@ body.light-mode .trending-card h4 {
     padding: 15px 12px;
 }
 
-body.light-mode .movers-column {
-    background: #fff;
-    border-color: rgba(0, 0, 0, 0.08);
-}
+body.light-mode .movers-column { background: #fff; border-color: rgba(0,0,0,0.08); }
 
-.movers-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
+.movers-list { display: flex; flex-direction: column; gap: 6px; }
 
 .mover-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 10px;
+    padding: 7px 8px;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
-    gap: 8px;
+    gap: 6px;
 }
 
-.mover-item:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateX(-3px);
-}
+.mover-item:hover { background: rgba(255, 255, 255, 0.08); transform: translateX(-3px); }
+body.light-mode .mover-item { background: rgba(0,0,0,0.03); }
 
-body.light-mode .mover-item {
-    background: rgba(0, 0, 0, 0.03);
-}
-
-body.light-mode .mover-item:hover {
-    background: rgba(0, 0, 0, 0.06);
-}
-
-.mover-item img {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.mover-item .mover-name {
-    flex: 1;
-    font-size: 0.8rem;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
+.mover-item img { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; }
+.mover-item .mover-name { flex: 1; font-size: 0.75rem; font-weight: 700; }
 .mover-item .mover-change {
-    font-size: 0.8rem;
-    font-weight: bold;
+    font-size: 0.75rem;
+    font-weight: 700;
     direction: ltr;
     font-family: 'Courier New', monospace;
 }
 
-.mover-item .mover-change.positive {
-    color: #0ecb81;
+.mover-item .mover-change.positive { color: var(--green); }
+.mover-item .mover-change.negative { color: var(--red); }
+
+/* هشدارها */
+.alerts-list { display: flex; flex-direction: column; gap: 8px; }
+
+.alert-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.mover-item .mover-change.negative {
-    color: #f6465d;
+.alert-item.triggered {
+    border-color: var(--green);
+    background: rgba(14, 203, 129, 0.1);
 }
+
+.alert-coin { font-weight: 700; color: var(--gold); }
+.alert-target { direction: ltr; font-family: 'Courier New', monospace; }
+.alert-type { font-size: 0.75rem; opacity: 0.7; }
+.alert-delete {
+    background: rgba(246, 70, 93, 0.2);
+    border: 1px solid rgba(246, 70, 93, 0.3);
+    color: var(--red);
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+/* کیف پول */
+.wallet-section { margin: 25px 0; }
+
+.wallet-box {
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    text-align: center;
+}
+
+body.light-mode .wallet-box { background: #fff; border-color: rgba(0,0,0,0.08); }
+
+.wallet-btn {
+    display: inline-block;
+    padding: 13px 28px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #3375bb, #1e5799);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(51, 117, 187, 0.3);
+    width: 100%;
+    max-width: 300px;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+.wallet-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(51, 117, 187, 0.5); }
+.wallet-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.wallet-btn.disconnect {
+    background: linear-gradient(135deg, #f6465d, #d63e52);
+    margin-top: 15px;
+    font-size: 0.85rem;
+    padding: 11px 22px;
+}
+
+.wallet-warning { color: var(--red); font-size: 0.9rem; margin-bottom: 12px; padding: 10px; background: rgba(246, 70, 93, 0.1); border-radius: 8px; }
+
+.wallet-label { color: var(--gray-text); font-size: 0.78rem; margin-top: 12px; margin-bottom: 5px; text-align: right; padding-right: 5px; }
+body.light-mode .wallet-label { color: #666; }
+
+.wallet-address {
+    direction: ltr;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: var(--gold);
+    word-break: break-all;
+    border: 1px solid rgba(240, 185, 11, 0.2);
+    text-align: center;
+}
+
+body.light-mode .wallet-address { background: rgba(0,0,0,0.03); color: var(--gold-dark); }
+
+.wallet-balance {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--green);
+    direction: ltr;
+    font-family: 'Courier New', monospace;
+    padding: 8px;
+    background: rgba(14, 203, 129, 0.08);
+    border-radius: 10px;
+    border: 1px solid rgba(14, 203, 129, 0.2);
+}
+
+.wallet-network {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--gold);
+    padding: 6px 12px;
+    background: rgba(240, 185, 11, 0.1);
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.wallet-status {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    padding: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+.wallet-status.show { display: block; animation: fadeIn 0.3s ease; }
+.wallet-status.error { background: rgba(246, 70, 93, 0.15); color: var(--red); }
+.wallet-status.success { background: rgba(14, 203, 129, 0.15); color: var(--green); }
+.wallet-status.info { background: rgba(240, 185, 11, 0.15); color: var(--gold); }
+
+/* جستجو */
+.search-box { margin-bottom: 15px; display: flex; justify-content: center; }
+
+#search-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 14px 22px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+#search-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+#search-input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(240, 185, 11, 0.15); }
+body.light-mode #search-input { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); color: #222; }
+body.light-mode #search-input::placeholder { color: rgba(0,0,0,0.4); }
+
+/* فیلترها */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.filter-btn:hover { background: rgba(240, 185, 11, 0.15); transform: translateY(-2px); }
+.filter-btn.active { background: rgba(240, 185, 11, 0.25); border-color: var(--gold); color: var(--gold); font-weight: 700; }
+body.light-mode .filter-btn { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); color: #222; }
+body.light-mode .filter-btn.active { background: rgba(217,154,0,0.15); color: var(--gold-dark); }
+
+/* شبکه کارت‌ها */
+#crypto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.crypto-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 15px 12px;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    cursor: pointer;
+    animation: cardFadeIn 0.4s ease backwards;
+}
+
+@keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.crypto-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(240, 185, 11, 0.4);
+    box-shadow: 0 8px 20px rgba(240, 185, 11, 0.15);
+}
+
+body.light-mode .crypto-card { background: #fff; border-color: rgba(0,0,0,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+.crypto-card .rank {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(240, 185, 11, 0.2);
+    color: var(--gold);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 8px;
+}
+
+body.light-mode .crypto-card .rank { background: rgba(217,154,0,0.15); color: var(--gold-dark); }
+
+.crypto-card .coin-logo {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px;
+    transition: transform 0.3s;
+}
+
+.crypto-card:hover .coin-logo { transform: scale(1.15) rotate(5deg); }
+
+.crypto-card h3 {
+    color: var(--gold);
+    font-size: 0.82rem;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 700;
+}
+
+body.light-mode .crypto-card h3 { color: var(--gold-dark); }
+
+.crypto-card .symbol { font-size: 0.68rem; color: var(--gray-text); margin-bottom: 6px; direction: ltr; font-weight: 500; }
+.crypto-card .price { font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; direction: ltr; font-family: 'Courier New', monospace; }
+.crypto-card .price-toman { font-size: 0.72rem; color: var(--green); margin-bottom: 5px; font-weight: 700; }
+body.light-mode .crypto-card .price-toman { color: #059669; }
+
+.crypto-card .change {
+    font-weight: 700;
+    font-size: 0.72rem;
+    direction: ltr;
+    font-family: 'Courier New', monospace;
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 8px;
+}
+
+.crypto-card .change.positive { color: var(--green); background: rgba(14, 203, 129, 0.1); }
+.crypto-card .change.negative { color: var(--red); background: rgba(246, 70, 93, 0.1); }
+
+.crypto-card .favorite-btn {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0;
+    z-index: 2;
+    color: inherit;
+}
+
+.crypto-card .favorite-btn:hover { transform: scale(1.2); background: rgba(240, 185, 11, 0.3); }
+.crypto-card .favorite-btn.active { background: rgba(240, 185, 11, 0.4); border-color: var(--gold); }
+
+/* پیام خالی */
+.empty-favorites, .no-results {
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 50px 20px;
+    opacity: 0.7;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.empty-favorites .big-star { font-size: 3rem; display: block; margin-bottom: 15px; animation: starPulse 2s ease-in-out infinite; }
+
+@keyframes starPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* صفحه‌بندی */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 25px 0;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.page-btn {
+    padding: 10px 20px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold);
+    background: rgba(240, 185, 11, 0.15);
+    border: 1px solid rgba(240, 185, 11, 0.4);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.page-btn:hover:not(:disabled) { background: rgba(240, 185, 11, 0.3); transform: translateY(-2px); }
+.page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+#page-info { font-size: 0.9rem; font-weight: 700; opacity: 0.85; min-width: 120px; text-align: center; }
+
+body.light-mode .page-btn { color: var(--gold-dark); background: rgba(217,154,0,0.1); }
+
+/* مودال */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: fadeIn 0.3s;
+}
+
+.modal.open { display: flex; }
+
+.modal-content {
+    background: linear-gradient(135deg, #1a1738, #2a2454);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.3s;
+}
+
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+body.light-mode .modal-content { background: #fff; border-color: rgba(0,0,0,0.08); }
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 34px;
+    height: 34px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.modal-close:hover { background: rgba(246, 70, 93, 0.3); transform: rotate(90deg); }
+
+.modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding-top: 8px; }
+.modal-logo { width: 45px; height: 45px; border-radius: 50%; object-fit: contain; background: rgba(255,255,255,0.05); padding: 3px; }
+.modal-header h2 { color: var(--gold); font-size: 1.2rem; margin-bottom: 3px; }
+body.light-mode .modal-header h2 { color: var(--gold-dark); }
+
+#modal-price { font-size: 1rem; font-weight: 700; direction: ltr; font-family: 'Courier New', monospace; }
+
+#modal-change {
+    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 8px;
+}
+
+#modal-change.positive { color: var(--green); background: rgba(14, 203, 129, 0.1); }
+#modal-change.negative { color: var(--red); background: rgba(246, 70, 93, 0.1); }
+
+.chart-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.chart-period-btn {
+    padding: 6px 14px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.chart-period-btn.active { background: rgba(240, 185, 11, 0.25); border-color: var(--gold); color: var(--gold); font-weight: 700; }
+body.light-mode .chart-period-btn { background: rgba(0,0,0,0.04); color: #222; }
+
+.chart-container {
+    position: relative;
+    height: 260px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+body.light-mode .chart-container { background: rgba(0,0,0,0.02); }
+
+.modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.action-btn {
+    flex: 1;
+    min-width: 130px;
+    padding: 11px 15px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+    background: rgba(240, 185, 11, 0.2);
+    border: 1px solid rgba(240, 185, 11, 0.4);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.action-btn:hover { background: rgba(240, 185, 11, 0.35); transform: translateY(-2px); }
+
+/* فوتر */
+footer {
+    text-align: center;
+    padding: 25px 20px;
+    opacity: 0.5;
+    font-size: 0.78rem;
+    line-height: 1.8;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 20px;
+}
+
+/* انیمیشن */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
 /* موبایل */
 @media (max-width: 480px) {
-    .movers-columns {
-        grid-template-columns: 1fr;
-    }
-    
-    .fg-value {
-        font-size: 2.5rem;
-    }
-    
-    .trending-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    }
+    header h1 { font-size: 1.3rem; }
+    .movers-columns { grid-template-columns: 1fr; }
+    .fg-value { font-size: 2.3rem; }
+    #crypto-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+    .crypto-card { padding: 12px 10px; }
+    .crypto-card .coin-logo { width: 26px; height: 26px; }
+    .crypto-card h3 { font-size: 0.78rem; }
+    .crypto-card .price { font-size: 0.85rem; }
+    .modal-content { padding: 18px; }
+    .chart-container { height: 220px; }
+    .nav-link { font-size: 0.78rem; padding: 7px 12px; }
 }
+
+/* اسکرول‌بار */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.03); }
+::-webkit-scrollbar-thumb { background: rgba(240, 185, 11, 0.3); border-radius: 10px; }
