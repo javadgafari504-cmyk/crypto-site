@@ -496,4 +496,125 @@ async function openChart(coin) {
     const change = coin.price_change_percentage_24h || 0;
     const modalChange = document.getElementById('modal-change');
     modalChange.textContent = (change >= 0 ? '▲ +' : '▼ ') + Math.abs(change).toFixed(2) + '% (۲۴ ساعت)';
-    modal
+    modalChange.className = change >= 0 ? 'positive' : 'negative';
+    
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    
+    const chartContainer = document.querySelector('.chart-container');
+    chartContainer.innerHTML = '<p style="text-align:center;padding:50px;opacity:0.6;">⏳ در حال دریافت نمودار...</p>';
+    
+    try {
+        const response = await fetch(`${API_BASE}/coins/${coin.id}/market_chart?vs_currency=usd&days=7`);
+        const data = await response.json();
+        const prices = data.prices;
+        
+        chartContainer.innerHTML = '<canvas id="price-chart"></canvas>';
+        const ctx = document.getElementById('price-chart').getContext('2d');
+        
+        const labels = prices.map(p => {
+            const d = new Date(p[0]);
+            return d.toLocaleDateString('fa-IR', { month: 'short', day: 'numeric' });
+        });
+        const values = prices.map(p => p[1]);
+        
+        const isUp = values[values.length - 1] >= values[0];
+        const lineColor = isUp ? '#0ecb81' : '#f6465d';
+        const fillColor = isUp ? 'rgba(14, 203, 129, 0.15)' : 'rgba(246, 70, 93, 0.15)';
+        
+        if (chartInstance) chartInstance.destroy();
+        
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'قیمت',
+                    data: values,
+                    borderColor: lineColor,
+                    backgroundColor: fillColor,
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 0,
+                    pointHoverRadius: 6,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0,0,0,0.9)',
+                        padding: 12,
+                        callbacks: {
+                            label: (ctx) => '$' + ctx.parsed.y.toLocaleString('en-US', {
+                                maximumFractionDigits: 2
+                            })
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 10 }, maxTicksLimit: 6 }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+        
+    } catch (error) {
+        chartContainer.innerHTML = '<p style="text-align:center;padding:50px;opacity:0.6;">❌ خطا</p>';
+    }
+}
+
+function closeChart() {
+    const modal = document.getElementById('chart-modal');
+    if (!modal) return;
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if (chartInstance) {
+        chartInstance.destroy();
+        chartInstance = null;
+    }
+}
+
+function setupChartModal() {
+    document.getElementById('modal-close')?.addEventListener('click', closeChart);
+    document.getElementById('chart-modal')?.addEventListener('click', (e) => {
+        if (e.target.id === 'chart-modal') closeChart();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeChart();
+    });
+}
+
+/* ============================================
+   ۱۶. شروع
+   ============================================ */
+
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 سایت شروع شد');
+    
+    setupTheme();
+    setupSearch();
+    setupFilterButtons();
+    setupPagination();
+    setupChartModal();
+    updateFavCount();
+    
+    // دریافت داده‌ها
+    fetchPrices();
+    fetchFearGreed();
+    fetchTrending();
+    
+    // به‌روزرسانی هر ۶۰ ثانیه
+    setInterval(fetchPrices, 60000);
+    // شاخص ترس هر ۱۰ دقیقه (چون API محدودیت داره)
+    setInterval(fetchFearGreed, 600000);
+});
